@@ -66,8 +66,6 @@ url='https://drive.google.com/file/d/1O4rFr9xg9aFmkjx4-hl_XOc5O9q65_EW\
 url='https://drive.google.com/uc?id=' + url.split('/')[-2]
 df = pd.read_csv(url)
 
-print_separate()
-
 # how many models can you insert 2 SIM cards into?
 dual_sim_count = df['dual_sim'].sum()
 print(f'dual_sim_count={dual_sim_count}')
@@ -99,8 +97,6 @@ print_separate()
 nowifi_table = df[df['wifi']==0]
 no_wifi_battery = nowifi_table['battery_power']
 calculate_print_values(no_wifi_battery, name='no_wifi_battery')
-
-print_separate()
 
 show_graphs(all_battery, name='all_battery')
 show_graphs(wifi_battery, name='wifi_battery')

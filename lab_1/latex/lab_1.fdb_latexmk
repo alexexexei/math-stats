@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1729458273.87216 "d:/code/math-stats/lab_1/latex/lab_1.tex" "lab_1.pdf" "lab_1" 1729458276.95209 0
+["pdflatex"] 1729504868.7515 "d:/code/math-stats/lab_1/latex/lab_1.tex" "lab_1.pdf" "lab_1" 1729504872.12026 0
   "C:/Users/alexexexei/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1714569862.67411 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/alexexexei/AppData/Local/MiKTeX/fonts/pk/ljfour/lh/lh-t2a/dpi600/labx1200.pk" 1712758553.57192 29472 a23687e085f1c4f4cec2502d9bd12104 ""
   "C:/Users/alexexexei/AppData/Local/MiKTeX/fonts/pk/ljfour/lh/lh-t2a/dpi600/labx1440.pk" 1712758552.00441 36852 d43d663f07e1c3ab86c8305707a1308c ""
@@ -194,7 +194,7 @@
   "C:/Users/alexexexei/AppData/Local/Programs/MiKTeX/tex/latex/ucs/utf8x.def" 1700127473 8944 e3433baec74c4b7b278c6b6a547ff9ec ""
   "C:/Users/alexexexei/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/alexexexei/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1700127522 55487 80a65caedd3722f4c20a14a69e785d8f ""
-  "d:/code/math-stats/lab_1/latex/lab_1.tex" 1729458272.88065 16923 94179272f367f0485181b49134060624 ""
+  "d:/code/math-stats/lab_1/latex/lab_1.tex" 1729504867.65898 18748 5a425741b9c004b7498fd4b99a3b1193 ""
   "images/all_battery_box.png" 1729456139.67428 19031 feefa53d0317c679916168c40390032c ""
   "images/all_battery_edf.png" 1729456130.94986 31498 5c52eaf0ab24374de586c95dfa98056b ""
   "images/all_battery_hist.png" 1729456135.63669 20612 707435b588c8bd863949047227794369 ""
@@ -205,9 +205,9 @@
   "images/wifi_battery_box.png" 1729456156.56851 19341 3eb4d2fca810742178ef314ea5745f5c ""
   "images/wifi_battery_edf.png" 1729456146.71847 31576 8764587e8b3a41b2f444f99bde8484f5 ""
   "images/wifi_battery_hist.png" 1729456152.03525 18732 11b3a4b6820d5fafc4a2295427bb1b72 ""
-  "lab_1.aux" 1729458276.13009 6207 03967ae41f0cca57615c422aacddf4df "pdflatex"
-  "lab_1.out" 1729458276.13209 362 98c9899f80e0dd741d45559e07a43052 "pdflatex"
-  "lab_1.toc" 1729458276.13509 268 7dc81482740c1decf1210b0e7ec12767 "pdflatex"
+  "lab_1.aux" 1729504871.15387 6207 40a196ffc383d46208bfca189a24e43f "pdflatex"
+  "lab_1.out" 1729504871.15587 362 98c9899f80e0dd741d45559e07a43052 "pdflatex"
+  "lab_1.toc" 1729504871.15887 268 7dc81482740c1decf1210b0e7ec12767 "pdflatex"
   (generated)
   "lab_1.aux"
   "lab_1.log"

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3.31) (preloaded format=pdflatex 2024.4.10)  21 OCT 2024 00:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3.31) (preloaded format=pdflatex 2024.4.10)  21 OCT 2024 13:01
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1415,54 +1415,54 @@ Package ucs Info: utf8x disabled, assuming standard utf8 processing
 (C:\Users\alexexexei\AppData\Local\Programs\MiKTeX\tex/latex/base\utf8.def
 File: utf8.def 2022/06/07 v1.3c UTF-8 support
 )) [4]
-<images/all_battery_edf.png, id=175, 722.7pt x 361.35pt>
+<images/all_battery_edf.png, id=170, 722.7pt x 361.35pt>
 File: images/all_battery_edf.png Graphic file (type png)
 <use images/all_battery_edf.png>
-Package pdftex.def Info: images/all_battery_edf.png  used on input line 288.
+Package pdftex.def Info: images/all_battery_edf.png  used on input line 285.
 (pdftex.def)             Requested size: 397.48622pt x 198.74312pt.
-<images/all_battery_hist.png, id=176, 722.7pt x 361.35pt>
+<images/all_battery_hist.png, id=171, 722.7pt x 361.35pt>
 File: images/all_battery_hist.png Graphic file (type png)
 <use images/all_battery_hist.png>
-Package pdftex.def Info: images/all_battery_hist.png  used on input line 295.
+Package pdftex.def Info: images/all_battery_hist.png  used on input line 292.
 (pdftex.def)             Requested size: 397.48622pt x 198.74312pt.
-<images/all_battery_box.png, id=177, 722.7pt x 361.35pt>
+<images/all_battery_box.png, id=172, 722.7pt x 361.35pt>
 File: images/all_battery_box.png Graphic file (type png)
 <use images/all_battery_box.png>
-Package pdftex.def Info: images/all_battery_box.png  used on input line 302.
-(pdftex.def)             Requested size: 361.3491pt x 180.67456pt.
-<images/wifi_battery_edf.png, id=178, 722.7pt x 361.35pt>
+Package pdftex.def Info: images/all_battery_box.png  used on input line 299.
+(pdftex.def)             Requested size: 397.48622pt x 198.74312pt.
+<images/wifi_battery_edf.png, id=173, 722.7pt x 361.35pt>
 File: images/wifi_battery_edf.png Graphic file (type png)
 <use images/wifi_battery_edf.png>
-Package pdftex.def Info: images/wifi_battery_edf.png  used on input line 311.
+Package pdftex.def Info: images/wifi_battery_edf.png  used on input line 308.
 (pdftex.def)             Requested size: 397.48622pt x 198.74312pt.
-<images/wifi_battery_hist.png, id=179, 722.7pt x 361.35pt>
+<images/wifi_battery_hist.png, id=174, 722.7pt x 361.35pt>
 File: images/wifi_battery_hist.png Graphic file (type png)
 <use images/wifi_battery_hist.png>
-Package pdftex.def Info: images/wifi_battery_hist.png  used on input line 318.
+Package pdftex.def Info: images/wifi_battery_hist.png  used on input line 315.
 (pdftex.def)             Requested size: 397.48622pt x 198.74312pt.
  [5 <./images/all_battery_edf.png> <./images/all_battery_hist.png> <./images/all_battery_box.png>]
-<images/wifi_battery_box.png, id=190, 722.7pt x 361.35pt>
+<images/wifi_battery_box.png, id=185, 722.7pt x 361.35pt>
 File: images/wifi_battery_box.png Graphic file (type png)
 <use images/wifi_battery_box.png>
-Package pdftex.def Info: images/wifi_battery_box.png  used on input line 325.
-(pdftex.def)             Requested size: 361.3491pt x 180.67456pt.
-<images/no_wifi_battery_edf.png, id=191, 722.7pt x 361.35pt>
+Package pdftex.def Info: images/wifi_battery_box.png  used on input line 322.
+(pdftex.def)             Requested size: 397.48622pt x 198.74312pt.
+<images/no_wifi_battery_edf.png, id=186, 722.7pt x 361.35pt>
 File: images/no_wifi_battery_edf.png Graphic file (type png)
 <use images/no_wifi_battery_edf.png>
-Package pdftex.def Info: images/no_wifi_battery_edf.png  used on input line 334.
+Package pdftex.def Info: images/no_wifi_battery_edf.png  used on input line 331.
 (pdftex.def)             Requested size: 397.48622pt x 198.74312pt.
-<images/no_wifi_battery_hist.png, id=192, 722.7pt x 361.35pt>
+<images/no_wifi_battery_hist.png, id=187, 722.7pt x 361.35pt>
 File: images/no_wifi_battery_hist.png Graphic file (type png)
 <use images/no_wifi_battery_hist.png>
-Package pdftex.def Info: images/no_wifi_battery_hist.png  used on input line 341.
+Package pdftex.def Info: images/no_wifi_battery_hist.png  used on input line 338.
 (pdftex.def)             Requested size: 397.48622pt x 198.74312pt.
  [6 <./images/wifi_battery_edf.png> <./images/wifi_battery_hist.png> <./images/wifi_battery_box.png>]
-<images/no_wifi_battery_box.png, id=204, 722.7pt x 361.35pt>
+<images/no_wifi_battery_box.png, id=199, 722.7pt x 361.35pt>
 File: images/no_wifi_battery_box.png Graphic file (type png)
 <use images/no_wifi_battery_box.png>
-Package pdftex.def Info: images/no_wifi_battery_box.png  used on input line 348.
-(pdftex.def)             Requested size: 361.3491pt x 180.67456pt.
- [7 <./images/no_wifi_battery_edf.png> <./images/no_wifi_battery_hist.png> <./images/no_wifi_battery_box.png>] (lab_1.aux)
+Package pdftex.def Info: images/no_wifi_battery_box.png  used on input line 345.
+(pdftex.def)             Requested size: 397.48622pt x 198.74312pt.
+ [7 <./images/no_wifi_battery_edf.png> <./images/no_wifi_battery_hist.png> <./images/no_wifi_battery_box.png>] [8] (lab_1.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-03-14>
@@ -1471,17 +1471,17 @@ Package rerunfilecheck Info: File `lab_1.out' has not changed.
 (rerunfilecheck)             Checksum: 98C9899F80E0DD741D45559E07A43052;362.
  ) 
 Here is how much of TeX's memory you used:
- 26781 strings out of 474423
- 486776 string characters out of 5739358
- 2203496 words of memory out of 5000000
+ 26777 strings out of 474423
+ 486712 string characters out of 5739358
+ 2199496 words of memory out of 5000000
  48499 multiletter control sequences out of 15000+600000
  569001 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  102i,12n,107p,435b,2517s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\alexexexei\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t2a/dpi600\latt1200.pk> <C:\Users\alexexexei\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t2a/dpi600\latt1000.pk> <C:\Users\alexexexei\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t2a/dpi600\labx1200.pk> <C:\Users\alexexexei\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t2a/dpi600\labx1728.pk> <C:\Users\alexexexei\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t2a/dpi600\labx1440.pk> <C:\Users\alexexexei\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t2a/dpi600\larm1200.pk><C:/Users/alexexexei/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/alexexexei/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/alexexexei/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb>
-Output written on lab_1.pdf (8 pages, 339782 bytes).
+Output written on lab_1.pdf (9 pages, 342500 bytes).
 PDF statistics:
- 515 PDF objects out of 1000 (max. 8388607)
- 137 named destinations out of 1000 (max. 500000)
+ 521 PDF objects out of 1000 (max. 8388607)
+ 133 named destinations out of 1000 (max. 500000)
  107 words of extra memory for PDF output out of 10000 (max. 10000000)
 
