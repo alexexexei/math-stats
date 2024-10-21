@@ -359,4 +359,141 @@
     симметрично, и, ее значение совпадает с вычисленным. Интервал между минимумом и максимумом значений в ящике получился
     широким, что подтверждает большое значение вычисленной ранее дисперсии. Выбросы отсутствуют (нет точек вне усов).
     Рассуждения аналогичны для графиков с другой выборкой.
+
+
+    \section{Задание 2}
+    \subsection{Условие}
+    Методом моментов найти оценку квадрата масштабирующего параметра $\theta$ распределения Лапласа
+    (сдвиг считать нулевым). Эксперимент при $\theta=0.5$. \textbf{Указание}: для плотности используйте
+    параметризацию $$f_{\theta}(x)=\dfrac{1}{2\theta}\exp{\left\{-\dfrac{|x|}{\theta}\right\}}$$
+
+
+    Найти смещение, дисперсию, среднеквадратическую ошибку (\textbf{теоретические}) и указать свойства оценок.
+    Также провести эксперимент при указанных параметрах по следующей схеме:
+    \begin{enumerate}
+        \item Задайте массив объемов выборки
+        \item Для каждого объема выборки $n$ сгенерируйте $m$ выборок из вашего распределения и для каждой
+        сгенерированной выборки посчитайте оценку параметра согласно полученной формуле
+        \item Обработайте результаты (посчитайте выборочные характеристики для разницы между оценкой и реальным
+        параметром для каждого объема выборки, количество выборок, для которых оценка отличается от реального
+        параметра более чем на заданный вами порог и т. п.), визуализируйте результат
+    \end{enumerate}
+
+
+    \subsection{Выполнение}
+    Чтобы найти $\hat{\theta}^2$ методом моментов, необходимо приравнять теоретический и эмпирический
+    моменты порядка $k$. Теоретический выражается как функция от параметров распределения, которые мы
+    оцениваем. Эмпирический определяется на основе данных выборки.
+
+
+    Для начала определимся с тем, сколько нужно задать функций $g_i(x)$, по которым мы будем искать оценки $\hat{\theta_i}$
+    параметров распределения -- нам известен сдвиг $\mu=0$ и нужно оценить только $\theta^2$, следовательно количество
+    неизвестных $d=1$, а значит нам нужно задать одну функцию $g(x)$ и по ней найти одну оценку $\hat{\theta}^2$.
+
+
+    Начнем с нахождения теоретического момента. Нам необходимо задать такую функцию $$g(x)=x^k,$$ которая
+    при поиске $k$-го момента позволит нам получить выражение с $\theta^2$, чтобы после приравнивания моментов
+    мы могли выразить оценку $\hat{\theta}^2$ этого параметра.
+
+
+    % Выполняя задание, я пользовался данными с википедии на момент 20.10.2024, где те же параметры обозначаются другими буквами.
+    % Поэтому выясним сразу, как соотносятся обозначения на википедии с нашими. Распределение Лапласа с википедии имеет вид
+    % $$f(x)=\dfrac{\alpha}{2}\exp{\left\{-\alpha|x-\beta|\right\}},$$ где $-\infty<\beta<+\infty$ -- параметр сдвига, следовательно
+    % $$\beta=\mu,$$ а $\alpha>0$ -- параметр масштаба. Соотнеся функцию распределения Лапласа из википедии с данной в указании в условии
+    % задания получим и решим следующую систему
+    % $$
+    % \begin{cases}
+    %     \frc{\alpha}{2}=\frc{1}{2\theta}\\
+    %     \alpha=\frc{1}{\theta}
+    % \end{cases}\Rightarrow
+    % \,\,\,\,\,\alpha=\dfrac{1}{\theta}
+    % $$
+    % Теперь мы знаем, что $\beta=\mu$ и $\alpha=\frc{1}{\theta}$.
+
+
+    Попробуем задать $g(x)=x$. В таком случае, согласно википедии, получим первый момент
+    (математическое ожидание) для распределения Лапласа, равный(-ое)
+    сдвигу $\mu$, который в нашем случае отсутствует
+    $$\mathbb{E}\left[g(x)\right]=\mathbb{E}\left[x\right]=\mu=0$$
+    С первым моментом выражения с $\theta^2$ не получилось. Тогда, пусть $g(x)=x^2$ -- теперь
+    найдем второй момент для распределения Лапласа. Пользуясь википедией, получим
+    $$\mathbb{E}\left[g(x)\right]=\mathbb{E}\left[x^2\right]=\int\limits_{-\infty}^{\infty}x^2f(x)\,dx=\mu^2+2\theta^2=/\mu=0/=2\theta^2$$
+    Мы получили теоретический момент порядка $k=2$ для распределения Лапласа.
+    
+    
+    Найдем эмпирический момент порядка $k=2$ для распределения Лапласа. Имеем на данный момент такое выражение
+    $$\mathbb{E}\left[g(x)\right]=\mathbb{E}\left[x^2\right]=2\theta^2$$
+    Запишем вместо математического ожидания $\mathbb{E}\left[x^2\right]$ выборочный аналог таким способом
+    $$\mathbb{E}\left[g_i(x_j)\right]=\dfrac{1}{n}\sum\limits_{j=1}^{n}g_i(x_j)\Rightarrow \mathbb{E}\left[g(x_j)\right]=\mathbb{E}\left[x_j^2\right]=\dfrac{1}{n}\sum\limits_{j=1}^{n}x_j^2$$
+    Полученное для $\mathbb{E}\left[x_j^2\right]$ выражение является эмпирическим вторым моментом для распределения Лапласа.
+
+
+    Приравняем эмпирический и теоретический моменты второго порядка и выразим оценку квадрата параметра $\theta$
+    $$\dfrac{1}{n}\sum\limits_{j=1}^{n}x_j^2=2\theta^2\Rightarrow\hat{\theta}^2=\dfrac{1}{2n}\sum\limits_{j=1}^{n}x_j^2$$
+
+
+    Таким образом, методом моментов оценка квадрата масштабирующего параметра $\theta$ распределения Лапласа имеет вид
+    $$\hat{\theta}^2=\dfrac{1}{2n}\sum\limits_{j=1}^{n}x_j^2$$
+    Далее будем находить характеристики и проводить эксперименты с данным в условии значением $\theta=0.5$.
+
+
+    Смещение можно найти по следующей формуле $$\text{bias}\,{\left[\hat{\theta},\,\theta\right]}=\mathbb{E}\left[\hat{\theta}\right]-\theta$$
+    Если результат выражения выше равен нулю, значит оценка является несмещенной. В нашем случае имеем
+    $$\text{bias}\,{\left[\hat{\theta}^2,\,\theta^2\right]}=\mathbb{E}\left[\hat{\theta}^2\right]-\theta^2$$
+    Вычислим это выражение, применяя свойства математического ожидания. $\theta^2$ является
+    константой и мы сразу можем ее вычислить. Рассмотрим подробнее $\mathbb{E}\left[\hat{\theta}^2\right]$
+    $$\mathbb{E}\left[\hat{\theta}^2\right]=\mathbb{E}\left[\dfrac{1}{2n}\sum\limits_{j=1}^{n}x_j^2\right]=\dfrac{1}{2n}\mathbb{E}\left[\sum\limits_{j=1}^{n}x_j^2\right]
+    =\dfrac{1}{2n}\sum\limits_{j=1}^{n}\mathbb{E}\left[x_j^2\right],$$
+    $$\sum\limits_{j=1}^{n}\mathbb{E}\left[x_j^2\right]=
+    \begin{bmatrix}
+        \mathbb{E}\left[x^2\right]=2\theta^2\\
+        \mathbb{E}\left[x_1^2\right]=2\theta^2\\
+        \vdots \\
+        \mathbb{E}\left[x_n^2\right]=2\theta^2
+    \end{bmatrix}=
+    n\cdot2\theta^2,
+    $$
+    $$\dfrac{1}{2n}\sum\limits_{j=1}^{n}\mathbb{E}\left[x_j^2\right]=\dfrac{1}{2n}\cdot n\cdot2\theta^2=\theta^2
+    \Rightarrow \mathbb{E}\left[\hat{\theta}^2\right]=\theta^2$$
+    Теперь вычислим смещение
+    $$\text{bias}\,{\left[\hat{\theta}^2,\,\theta^2\right]}=\mathbb{E}\left[\hat{\theta}^2\right]-\theta^2=\theta^2-\theta^2=0$$
+    Таким образом, оценка является несмещенной.
+
+
+    Вычислим теоретические дисперсию (Var) и среднеквадратическую ошибку (MSE). Так как оценка является несмещенной,
+    то $$\text{Var}\,{\left[\hat{\theta}^2\right]}=\text{MSE}\,{\left[\hat{\theta}^2\right]},$$ а значит нам достаточно
+    найти $\text{Var}\,{\left[\hat{\theta}^2\right]}$. Покажем это -- для вычисления среднеквадратической ошибки используется следующая
+    формула $$\text{MSE}\,{\left[\hat{\theta}\right]}=\mathbb{E}\left[\left(\hat{\theta}-\theta\right)^2\right]
+    =\text{Var}\,{\left[\hat{\theta}\right]}+\text{bias}\,{\left[\hat{\theta},\,\theta\right]}^2$$
+    В нашем случае формула будет иметь вид
+    $$\text{MSE}\,{\left[\hat{\theta}^2\right]}=\text{Var}\,{\left[\hat{\theta}^2\right]}+\text{bias}\,{\left[\hat{\theta}^2,\,\theta^2\right]}^2,$$
+    так как смещение равно нулю, то второе слагаемое обнуляется, получаем
+    $$\text{MSE}\,{\left[\hat{\theta}^2\right]}=\text{Var}\,{\left[\hat{\theta}^2\right]}+0^2=\text{Var}\,{\left[\hat{\theta}^2\right]}$$
+    Используя свойства дисперсии вычислим ее значение
+    $$\text{Var}\,{\left[\hat{\theta}^2\right]}=\text{Var}\,{\left[\dfrac{1}{2n}\sum\limits_{j=1}^{n}x_j^2\right]}
+    =\dfrac{1}{4n^2}\text{Var}\,{\left[\sum\limits_{j=1}^{n}x_j^2\right]}=\dfrac{1}{4n^2}\sum\limits_{j=1}^{n}\text{Var}\,{\left[x_j^2\right]},$$
+    $$\sum\limits_{j=1}^{n}\text{Var}\,{\left[x_j^2\right]}=n\cdot\text{Var}\,{\left[x^2\right]}\Rightarrow \dfrac{1}{4n^2}\sum\limits_{j=1}^{n}\text{Var}\,{\left[x_j^2\right]}
+    =\dfrac{1}{4n^2}\cdot n\cdot\text{Var}\,{\left[x^2\right]}=\dfrac{\text{Var}\,{\left[x^2\right]}}{4n},$$
+    $$\text{Var}\,{\left[x^2\right]}=\mathbb{E}\left[x^4\right]-\left(\mathbb{E}\left[x^2\right]\right)^2,$$
+    $$\left(\mathbb{E}\left[x^2\right]\right)^2=\left(2\theta^2\right)^2=4\theta^4,\ \ \mathbb{E}\left[x^4\right]=\int\limits_{-\infty}^{\infty}x^4f(x)\,dx,$$
+    $$\int\limits_{-\infty}^{\infty}x^4f(x)\,dx=\int\limits_{-\infty}^{\infty}x^4\dfrac{1}{2\theta}\exp{\left\{-\dfrac{|x|}{\theta}\right\}}\,dx=2\int\limits_{0}^{\infty}x^4\dfrac{1}{2\theta}\exp{\left\{-\dfrac{x}{\theta}\right\}}\,dx=
+    \dfrac{1}{\theta}\int\limits_{0}^{\infty}x^4\exp{\left\{-\dfrac{x}{\theta}\right\}}\,dx,$$
+    $$\dfrac{1}{\theta}\int\limits_{0}^{\infty}x^4\exp{\left\{-\dfrac{x}{\theta}\right\}}\,dx=
+    \begin{bmatrix}
+        u=\dfrac{x}{\theta}\\
+        du=\dfrac{dx}{\theta}
+    \end{bmatrix}=
+    \dfrac{1}{\theta}\int\limits_{0}^{\infty}u^4\theta^4e^{-u}\theta\,du=\theta^4\int\limits_{0}^{\infty}u^4e^{-u}\,du=\theta^4\cdot\Gamma{(z)},$$
+    $$\Gamma{(z)}=\int\limits_{0}^{\infty}t^{z-1}e^{-t}\,dt\Rightarrow\int\limits_{0}^{\infty}u^4e^{-u}\,du=\Gamma{(z-1=4)}=\Gamma{(5)}=24\Rightarrow\theta^4\cdot\Gamma{(5)}=\theta^4\cdot24,$$
+    $$\text{Var}\,{\left[x^2\right]}=24\theta^4-4\theta^4=20\cdot\theta^4\Rightarrow\text{Var}\,{\left[\hat{\theta}^2\right]}=\dfrac{20\cdot\theta^4}{4n}=\dfrac{5\theta^4}{n}
+    =\dfrac{5\cdot0.5^4}{n}=\dfrac{0.3125}{n},$$
+    Таким образом
+    $$\text{MSE}\,{\left[\hat{\theta}^2\right]}=\text{Var}\,{\left[\hat{\theta}^2\right]}=\dfrac{0.3125}{n}$$
+    Видим, что при увеличении объема выборки $n$ разброс и ошибка будут уменьшаться.
+
+
+    Далее распишем свойства оценки. Мы уже знаем, что оценка является \textbf{несмещенной}, так как смещение $\text{bias}\,{\left[\hat{\theta}^2,\,\theta^2\right]}=0$, т. е. отсутствует.
+    Проверим состоятельность оценки
+    $$\lim\limits_{n\rightarrow\infty}\text{Var}\,{\left[\hat{\theta}^2\right]}=\lim\limits_{n\rightarrow\infty}\text{MSE}\,{\left[\hat{\theta}^2\right]}=\lim\limits_{n\rightarrow\infty}\dfrac{0.3125}{n}=0,$$
+    из чего следует, что оценка является \textbf{состоятельной}, так как чем больше данных, тем более точной становится оценка.
 \end{document}

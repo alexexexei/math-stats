@@ -49,14 +49,14 @@ for n in sample_sizes:
     print(f"Количество выборок, которые превышают порог: {results[n]['count_exceeds_threshold']}")
 
 # Визуализация
-plt.figure(figsize=(12, 8))
+plt.figure(figsize=(10, 5))
 
 for n in sample_sizes:
     plt.hist(results[n]['estimates'], bins=20, alpha=0.5, label=f'n={n}')
 
 plt.axvline(x=b**2, color='red', linestyle='--', label='Истинное значение b^2')
 plt.title('Распределение оценок b^2 для разных объемов выборки')
-plt.xlabel('Оценка b^2')
+plt.xlabel(r'$\hat{\theta}^2$')
 plt.ylabel('Частота')
 plt.legend()
 plt.grid()
