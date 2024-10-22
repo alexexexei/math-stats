@@ -396,21 +396,6 @@
     мы могли выразить оценку $\hat{\theta}^2$ этого параметра.
 
 
-    % Выполняя задание, я пользовался данными с википедии на момент 20.10.2024, где те же параметры обозначаются другими буквами.
-    % Поэтому выясним сразу, как соотносятся обозначения на википедии с нашими. Распределение Лапласа с википедии имеет вид
-    % $$f(x)=\dfrac{\alpha}{2}\exp{\left\{-\alpha|x-\beta|\right\}},$$ где $-\infty<\beta<+\infty$ -- параметр сдвига, следовательно
-    % $$\beta=\mu,$$ а $\alpha>0$ -- параметр масштаба. Соотнеся функцию распределения Лапласа из википедии с данной в указании в условии
-    % задания получим и решим следующую систему
-    % $$
-    % \begin{cases}
-    %     \frc{\alpha}{2}=\frc{1}{2\theta}\\
-    %     \alpha=\frc{1}{\theta}
-    % \end{cases}\Rightarrow
-    % \,\,\,\,\,\alpha=\dfrac{1}{\theta}
-    % $$
-    % Теперь мы знаем, что $\beta=\mu$ и $\alpha=\frc{1}{\theta}$.
-
-
     Попробуем задать $g(x)=x$. В таком случае, согласно википедии, получим первый момент
     (математическое ожидание) для распределения Лапласа, равный(-ое)
     сдвигу $\mu$, который в нашем случае отсутствует
@@ -437,9 +422,9 @@
     Далее будем находить характеристики и проводить эксперименты с данным в условии значением $\theta=0.5$.
 
 
-    Смещение можно найти по следующей формуле $$\text{bias}\,{\left[\hat{\theta},\,\theta\right]}=\mathbb{E}\left[\hat{\theta}\right]-\theta$$
+    Смещение можно найти по следующей формуле $$\text{bias}{\left[\hat{\theta},\,\theta\right]}=\mathbb{E}\left[\hat{\theta}\right]-\theta$$
     Если результат выражения выше равен нулю, значит оценка является несмещенной. В нашем случае имеем
-    $$\text{bias}\,{\left[\hat{\theta}^2,\,\theta^2\right]}=\mathbb{E}\left[\hat{\theta}^2\right]-\theta^2$$
+    $$\text{bias}{\left[\hat{\theta}^2,\,\theta^2\right]}=\mathbb{E}\left[\hat{\theta}^2\right]-\theta^2$$
     Вычислим это выражение, применяя свойства математического ожидания. $\theta^2$ является
     константой и мы сразу можем ее вычислить. Рассмотрим подробнее $\mathbb{E}\left[\hat{\theta}^2\right]$
     $$\mathbb{E}\left[\hat{\theta}^2\right]=\mathbb{E}\left[\dfrac{1}{2n}\sum\limits_{j=1}^{n}x_j^2\right]=\dfrac{1}{2n}\mathbb{E}\left[\sum\limits_{j=1}^{n}x_j^2\right]
@@ -456,27 +441,43 @@
     $$\dfrac{1}{2n}\sum\limits_{j=1}^{n}\mathbb{E}\left[x_j^2\right]=\dfrac{1}{2n}\cdot n\cdot2\theta^2=\theta^2
     \Rightarrow \mathbb{E}\left[\hat{\theta}^2\right]=\theta^2$$
     Теперь вычислим смещение
-    $$\text{bias}\,{\left[\hat{\theta}^2,\,\theta^2\right]}=\mathbb{E}\left[\hat{\theta}^2\right]-\theta^2=\theta^2-\theta^2=0$$
+    $$\text{bias}{\left[\hat{\theta}^2,\,\theta^2\right]}=\mathbb{E}\left[\hat{\theta}^2\right]-\theta^2=\theta^2-\theta^2=0$$
     Таким образом, оценка является несмещенной.
 
 
-    Вычислим теоретические дисперсию (Var) и среднеквадратическую ошибку (MSE). Так как оценка является несмещенной,
-    то $$\text{Var}\,{\left[\hat{\theta}^2\right]}=\text{MSE}\,{\left[\hat{\theta}^2\right]},$$ а значит нам достаточно
-    найти $\text{Var}\,{\left[\hat{\theta}^2\right]}$. Покажем это -- для вычисления среднеквадратической ошибки используется следующая
-    формула $$\text{MSE}\,{\left[\hat{\theta}\right]}=\mathbb{E}\left[\left(\hat{\theta}-\theta\right)^2\right]
-    =\text{Var}\,{\left[\hat{\theta}\right]}+\text{bias}\,{\left[\hat{\theta},\,\theta\right]}^2$$
-    В нашем случае формула будет иметь вид
-    $$\text{MSE}\,{\left[\hat{\theta}^2\right]}=\text{Var}\,{\left[\hat{\theta}^2\right]}+\text{bias}\,{\left[\hat{\theta}^2,\,\theta^2\right]}^2,$$
-    так как смещение равно нулю, то второе слагаемое обнуляется, получаем
-    $$\text{MSE}\,{\left[\hat{\theta}^2\right]}=\text{Var}\,{\left[\hat{\theta}^2\right]}+0^2=\text{Var}\,{\left[\hat{\theta}^2\right]}$$
-    Используя свойства дисперсии вычислим ее значение
-    $$\text{Var}\,{\left[\hat{\theta}^2\right]}=\text{Var}\,{\left[\dfrac{1}{2n}\sum\limits_{j=1}^{n}x_j^2\right]}
-    =\dfrac{1}{4n^2}\text{Var}\,{\left[\sum\limits_{j=1}^{n}x_j^2\right]}=\dfrac{1}{4n^2}\sum\limits_{j=1}^{n}\text{Var}\,{\left[x_j^2\right]},$$
-    $$\sum\limits_{j=1}^{n}\text{Var}\,{\left[x_j^2\right]}=n\cdot\text{Var}\,{\left[x^2\right]}\Rightarrow \dfrac{1}{4n^2}\sum\limits_{j=1}^{n}\text{Var}\,{\left[x_j^2\right]}
-    =\dfrac{1}{4n^2}\cdot n\cdot\text{Var}\,{\left[x^2\right]}=\dfrac{\text{Var}\,{\left[x^2\right]}}{4n},$$
-    $$\text{Var}\,{\left[x^2\right]}=\mathbb{E}\left[x^4\right]-\left(\mathbb{E}\left[x^2\right]\right)^2,$$
-    $$\left(\mathbb{E}\left[x^2\right]\right)^2=\left(2\theta^2\right)^2=4\theta^4,\ \ \mathbb{E}\left[x^4\right]=\int\limits_{-\infty}^{\infty}x^4f(x)\,dx,$$
-    $$\int\limits_{-\infty}^{\infty}x^4f(x)\,dx=\int\limits_{-\infty}^{\infty}x^4\dfrac{1}{2\theta}\exp{\left\{-\dfrac{|x|}{\theta}\right\}}\,dx=2\int\limits_{0}^{\infty}x^4\dfrac{1}{2\theta}\exp{\left\{-\dfrac{x}{\theta}\right\}}\,dx=
+    Вычислим теоретическую дисперсию оценки, пользуясь свойствами дисперсии и математического ожидания. В ходе вычислений вспомним биномиальный коэффициент и гамма функцию
+    $$\text{Var}{\left[\hat{\theta}^2\right]}=\mathbb{E}\left[\hat{\theta}^4\right]-\left(\mathbb{E}\left[\hat{\theta}^2\right]\right)^2
+    =\begin{bmatrix}
+        \mathbb{E}\left[\hat{\theta}^2\right]=\theta^2\\
+        \mathbb{E}\left[\hat{\theta}^4\right]=\mathbb{E}\left[\left(\hat{\theta}^2\right)^2\right]
+    \end{bmatrix}
+    =\mathbb{E}\left[\left(\dfrac{1}{2n}\sum\limits_{j=1}^{n}x_j^2\right)^2\right]-\left(\theta^2\right)^2,$$
+    $$\mathbb{E}\left[\left(\dfrac{1}{2n}\sum\limits_{j=1}^{n}x_j^2\right)^2\right]=\dfrac{1}{4n^2}\mathbb{E}\left[\left(\sum\limits_{j=1}^{n}x_j^2\right)^2\right],$$
+    $$\left(\sum\limits_{j=1}^{n}x_j^2\right)^2=\sum\limits_{j=1}^{n}x_j^4+2\sum\limits_{i\neq j}x_i^2x_j^2\Rightarrow \mathbb{E}\left[\hat{\theta}^4\right]=\dfrac{1}{4n^2}\mathbb{E}\left[\sum\limits_{j=1}^{n}x_j^4+2\sum\limits_{i\neq j}x_i^2x_j^2\right],$$
+    $$\mathbb{E}\left[\sum\limits_{j=1}^{n}x_j^4+2\sum\limits_{i\neq j}x_i^2x_j^2\right]=\mathbb{E}\left[\sum\limits_{j=1}^{n}x_j^4\right]+\mathbb{E}\left[2\sum\limits_{i\neq{j}}x_i^2x_j^2\right]=
+    \sum\limits_{j=1}^{n}E\left[x_j^4\right]+2\sum\limits_{i\neq{j}}\mathbb{E}\left[x_i^2x_j^2\right],$$
+    $$\sum\limits_{i\neq{j}}\mathbb{E}\left[x_i^2x_j^2\right]=/\text{случ. вел. }x_i \text{ независимы}/=\sum\limits_{i\neq{j}}\mathbb{E}\left[x_i^2\right]\mathbb{E}\left[x_j^2\right],$$
+    $$2\sum\limits_{i\neq{j}}\mathbb{E}\left[x_i^2x_j^2\right]=2\sum\limits_{i\neq{j}}\mathbb{E}\left[x_i^2\right]\mathbb{E}\left[x_j^2\right]=/\mathbb{E}\left[x^2\right]=2\theta^2/=2\sum\limits_{i\neq{j}}2\theta^2\cdot2\theta^2=8\theta^4\sum\limits_{i\neq{j}}1,$$
+    $$\sum\limits_{i\neq{j}}1=
+    /\text{бином. коэфф.}/=
+    \begin{pmatrix}
+        n\\
+        k=2>0
+    \end{pmatrix}
+    =\dfrac{n\left(n-1\right)}{2},$$
+    $$2\sum\limits_{i\neq{j}}\mathbb{E}\left[x_i^2x_j^2\right]=8\theta^4\cdot\dfrac{n\left(n-1\right)}{2}=4\theta^4n\left(n-1\right),$$
+    $$\sum\limits_{j=1}^{n}E\left[x_j^4\right]=
+    \begin{bmatrix}
+        \mathbb{E}\left[x^4\right]=\alpha\\
+        \mathbb{E}\left[x_1^4\right]=\alpha\\
+        \vdots \\
+        \mathbb{E}\left[x_n^4\right]=\alpha
+    \end{bmatrix}=
+    n\cdot\mathbb{E}\left[x^4\right],\text{ где }\mathbb{E}\left[x^4\right]\text{ -- четвертый момент},$$
+    $$\mathbb{E}\left[x^4\right]=\int\limits_{-\infty}^{\infty}x^4f(x)\,dx=\int\limits_{-\infty}^{\infty}x^4\cdot\dfrac{1}{2\theta}\exp{\left\{-\dfrac{|x|}{\theta}\right\}}\,dx=\dfrac{1}{2\theta}\int\limits_{-\infty}^{\infty}x^4\exp{\left\{-\dfrac{|x|}{\theta}\right\}}\,dx$$
+    Так как в нашем распределении Лапласа сдвиг отсутствует ($\mu=0$), то это означает, что распределение симметрично относительно нуля. Тогда, вычислим интеграл только для
+    положительных значений $x$ и умножим его на два. При условии $x\geq0$ получаем $|x|=x$
+    $$\mathbb{E}\left[x^4\right]=\dfrac{1}{2\theta}\int\limits_{-\infty}^{\infty}x^4\exp{\left\{-\dfrac{|x|}{\theta}\right\}}\,dx=2\cdot\dfrac{1}{2\theta}\int\limits_{0}^{\infty}x^4\exp{\left\{-\dfrac{x}{\theta}\right\}}\,dx=
     \dfrac{1}{\theta}\int\limits_{0}^{\infty}x^4\exp{\left\{-\dfrac{x}{\theta}\right\}}\,dx,$$
     $$\dfrac{1}{\theta}\int\limits_{0}^{\infty}x^4\exp{\left\{-\dfrac{x}{\theta}\right\}}\,dx=
     \begin{bmatrix}
@@ -484,16 +485,25 @@
         du=\dfrac{dx}{\theta}
     \end{bmatrix}=
     \dfrac{1}{\theta}\int\limits_{0}^{\infty}u^4\theta^4e^{-u}\theta\,du=\theta^4\int\limits_{0}^{\infty}u^4e^{-u}\,du=\theta^4\cdot\Gamma{(z)},$$
-    $$\Gamma{(z)}=\int\limits_{0}^{\infty}t^{z-1}e^{-t}\,dt\Rightarrow\int\limits_{0}^{\infty}u^4e^{-u}\,du=\Gamma{(z-1=4)}=\Gamma{(5)}=24\Rightarrow\theta^4\cdot\Gamma{(5)}=\theta^4\cdot24,$$
-    $$\text{Var}\,{\left[x^2\right]}=24\theta^4-4\theta^4=20\cdot\theta^4\Rightarrow\text{Var}\,{\left[\hat{\theta}^2\right]}=\dfrac{20\cdot\theta^4}{4n}=\dfrac{5\theta^4}{n}
-    =\dfrac{5\cdot0.5^4}{n}=\dfrac{0.3125}{n},$$
-    Таким образом
-    $$\text{MSE}\,{\left[\hat{\theta}^2\right]}=\text{Var}\,{\left[\hat{\theta}^2\right]}=\dfrac{0.3125}{n}$$
-    Видим, что при увеличении объема выборки $n$ разброс и ошибка будут уменьшаться.
+    $$\Gamma{(z)}=\int\limits_{0}^{\infty}t^{z-1}e^{-t}\,dt\Rightarrow\int\limits_{0}^{\infty}u^4e^{-u}\,du=\Gamma{(z-1=4)}=\Gamma{(5)}=24\Rightarrow\mathbb{E}\left[x^4\right]=\theta^4\cdot\Gamma{(5)}=\theta^4\cdot24,$$
+    $$\sum\limits_{j=1}^{n}E\left[x_j^4\right]=n\cdot\mathbb{E}\left[x^4\right]=n\cdot\theta^4\cdot24,$$
+    $$\mathbb{E}\left[\hat{\theta}^4\right]=\dfrac{1}{4n^2}\left(\sum\limits_{j=1}^{n}E\left[x_j^4\right]+2\sum\limits_{i\neq{j}}\mathbb{E}\left[x_i^2x_j^2\right]\right)=
+    \dfrac{1}{4n^2}\left(24\theta^4n+4\theta^4n\left(n-1\right)\right),$$
+    $$\dfrac{1}{4n^2}\left(24\theta^4n+4\theta^4n\left(n-1\right)\right)=\dfrac{4\theta^4n}{4n^2}\left(6+n-1\right)=\dfrac{\theta^4}{n}\left(n+5\right)=\theta^4\left(1+\dfrac{5}{n}\right)=\mathbb{E}\left[\hat{\theta}^4\right],$$
+    $$\text{Var}{\left[\hat{\theta}^2\right]}=\mathbb{E}\left[\hat{\theta}^4\right]-\left(\mathbb{E}\left[\hat{\theta}^2\right]\right)^2=
+    \theta^4\left(1+\dfrac{5}{n}\right)-\theta^4=\theta^4\left(1+\dfrac{5}{n}-1\right)=\dfrac{5\theta^4}{n}$$
+    При условии, что эксперимент проводится для $\theta=0.5$, получим
+    $$\text{Var}{\left[\hat{\theta}^2\right]}=\dfrac{5\cdot0.5^4}{n}=\dfrac{0.3125}{n}$$
+    На самом деле, вследствие независимости случайных величин $x_i$ достаточно было вычислить выражение ниже, чтобы избежать лишних шагов, так как ковариации между независимыми случайными величинами равны нулю
+    $$\text{Var}{\left[\hat{\theta}^2\right]}=\text{Var}{\left[\dfrac{1}{2n}\sum\limits_{j=1}^{n}x_j^2\right]}=\dfrac{1}{4n^2}\left(\sum\limits_{j=1}^{n}\text{Var}\left[x_{j}^2\right]+2\sum\limits_{i\neq{j}}\text{Cov}\,\left[x_i^2,x_j^2\right]\right)=\dfrac{1}{4n^2}\sum\limits_{j=1}^{n}\text{Var}\left[x_{j}^2\right]$$
+
+    
+    Найдем теоретическую среднеквадратическую ошибку. Так как оценка является несмещенной, то теоретические среднеквадратическая ошибка и дисперсия равны. Таким образом, получим
+    $$\text{MSE}{\left[\hat{\theta}^2\right]}=\text{Var}{\left[\hat{\theta}^2\right]}=\dfrac{0.3125}{n}$$
 
 
-    Далее распишем свойства оценки. Мы уже знаем, что оценка является \textbf{несмещенной}, так как смещение $\text{bias}\,{\left[\hat{\theta}^2,\,\theta^2\right]}=0$, т. е. отсутствует.
+    Далее распишем свойства оценки. Мы уже знаем, что оценка является \textbf{несмещенной}, так как смещение $\text{bias}{\left[\hat{\theta}^2,\,\theta^2\right]}=0$, т. е. отсутствует.
     Проверим состоятельность оценки
-    $$\lim\limits_{n\rightarrow\infty}\text{Var}\,{\left[\hat{\theta}^2\right]}=\lim\limits_{n\rightarrow\infty}\text{MSE}\,{\left[\hat{\theta}^2\right]}=\lim\limits_{n\rightarrow\infty}\dfrac{0.3125}{n}=0,$$
+    $$\lim\limits_{n\rightarrow\infty}\text{MSE}{\left[\hat{\theta}^2\right]}=\lim\limits_{n\rightarrow\infty}\text{Var}{\left[\hat{\theta}^2\right]}=\lim\limits_{n\rightarrow\infty}\dfrac{0.3125}{n}=\left\{\dfrac{0.3125}{\infty}\right\}=0,$$
     из чего следует, что оценка является \textbf{состоятельной}, так как чем больше данных, тем более точной становится оценка.
 \end{document}
