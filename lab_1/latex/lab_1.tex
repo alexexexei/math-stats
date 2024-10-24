@@ -26,10 +26,6 @@
 \lstdefinestyle{code}{
     language=Python, % replace with needed language
     basicstyle=\footnotesize\ttfamily,
-    % numbers=left,
-    % numberstyle=\scriptsize\color{gray},
-    % stepnumber=1,
-    % numbersep=5pt,
     backgroundcolor=\color{LightGray},
     showspaces=false,
     showstringspaces=false,
@@ -466,7 +462,7 @@
     \end{pmatrix}
     =\dfrac{n\left(n-1\right)}{2},$$
     $$2\sum\limits_{i\neq{j}}\mathbb{E}\left[x_i^2x_j^2\right]=8\theta^4\cdot\dfrac{n\left(n-1\right)}{2}=4\theta^4n\left(n-1\right),$$
-    $$\sum\limits_{j=1}^{n}E\left[x_j^4\right]=
+    $$\sum\limits_{j=1}^{n}\mathbb{E}\left[x_j^4\right]=
     \begin{bmatrix}
         \mathbb{E}\left[x^4\right]=\alpha\\
         \mathbb{E}\left[x_1^4\right]=\alpha\\
@@ -486,7 +482,7 @@
     \end{bmatrix}=
     \dfrac{1}{\theta}\int\limits_{0}^{\infty}u^4\theta^4e^{-u}\theta\,du=\theta^4\int\limits_{0}^{\infty}u^4e^{-u}\,du=\theta^4\cdot\Gamma{(z)},$$
     $$\Gamma{(z)}=\int\limits_{0}^{\infty}t^{z-1}e^{-t}\,dt\Rightarrow\int\limits_{0}^{\infty}u^4e^{-u}\,du=\Gamma{(z-1=4)}=\Gamma{(5)}=24\Rightarrow\mathbb{E}\left[x^4\right]=\theta^4\cdot\Gamma{(5)}=\theta^4\cdot24,$$
-    $$\sum\limits_{j=1}^{n}E\left[x_j^4\right]=n\cdot\mathbb{E}\left[x^4\right]=n\cdot\theta^4\cdot24,$$
+    $$\sum\limits_{j=1}^{n}\mathbb{E}\left[x_j^4\right]=n\cdot\mathbb{E}\left[x^4\right]=n\cdot\theta^4\cdot24,$$
     $$\mathbb{E}\left[\hat{\theta}^4\right]=\dfrac{1}{4n^2}\left(\sum\limits_{j=1}^{n}E\left[x_j^4\right]+2\sum\limits_{i\neq{j}}\mathbb{E}\left[x_i^2x_j^2\right]\right)=
     \dfrac{1}{4n^2}\left(24\theta^4n+4\theta^4n\left(n-1\right)\right),$$
     $$\dfrac{1}{4n^2}\left(24\theta^4n+4\theta^4n\left(n-1\right)\right)=\dfrac{4\theta^4n}{4n^2}\left(6+n-1\right)=\dfrac{\theta^4}{n}\left(n+5\right)=\theta^4\left(1+\dfrac{5}{n}\right)=\mathbb{E}\left[\hat{\theta}^4\right],$$
@@ -502,8 +498,16 @@
     $$\text{MSE}{\left[\hat{\theta}^2\right]}=\text{Var}{\left[\hat{\theta}^2\right]}=\dfrac{0.3125}{n}$$
 
 
-    Далее распишем свойства оценки. Мы уже знаем, что оценка является \textbf{несмещенной}, так как смещение $\text{bias}{\left[\hat{\theta}^2,\,\theta^2\right]}=0$, т. е. отсутствует.
+    Далее распишем свойства оценки. Мы уже знаем, что оценка является \textbf{несмещенной}, так как смещение $\text{bias}{\left[\hat{\theta}^2,\,\theta^2\right]}=0$ ($\mathbb{E}\left[\hat{\theta^2}\right]=\theta^2$), т. е. отсутствует.
+
+
     Проверим состоятельность оценки
     $$\lim\limits_{n\rightarrow\infty}\text{MSE}{\left[\hat{\theta}^2\right]}=\lim\limits_{n\rightarrow\infty}\text{Var}{\left[\hat{\theta}^2\right]}=\lim\limits_{n\rightarrow\infty}\dfrac{0.3125}{n}=\left\{\dfrac{0.3125}{\infty}\right\}=0,$$
     из чего следует, что оценка является \textbf{состоятельной}, так как чем больше данных, тем более точной становится оценка.
+
+
+    Так как других оценок кроме полученной не имеется, не можем сравнить среднеквадратические ошибки оценок и на этой основе сделать вывод об эффективности -- \textbf{эффективность не гарантируется}.
+
+
+    
 \end{document}
