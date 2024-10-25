@@ -2,59 +2,77 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-sample_sizes = [10, 100, 1000]  # массив объемов выборки
-m = 100  # количество выборок для каждого n
-b = 0.5  # истинное значение параметра b
-threshold = 0.1  # порог для определения отличия
+# common separator between unrelated outputs
+def print_separate():
+    print('----------------')
 
-# Для хранения оценок
-estimates = {n: [] for n in sample_sizes}
 
-for n in sample_sizes:
-    for _ in range(m):
-        # Генерация выборки из распределения Лапласа с нулевым сдвигом
-        sample = np.random.laplace(loc=0, scale=b, size=n)
+n_list = [10, 100, 1000]  # list of sample sizes
+m = 100  # number of samples for each n
+theta = 0.5  # true value of the scaling parameter
+delta = 0.1  # threshold for determining the difference
+hat_theta2_dict = {n: [] for n in n_list} # dictionary (key-val) for storing estimates
+
+# for each n generating m samples and calculating estimates
+for n in n_list:
+    for i in range(m):
+        # generating a sample from a Laplace distribution with zero bias
+        sample = np.random.laplace(loc=0, scale=theta, size=n)
         
-        estimate_b_squared = (1 / (2 * n)) * np.sum(sample ** 2)
-        estimates[n].append(estimate_b_squared)
+        # calculating hat_theta^2 accroding to the derived formula
+        hat_theta2 = (1 / (2 * n)) * np.sum(sample ** 2)
+        hat_theta2_dict[n].append(hat_theta2)
 
-# Обработка результатов
+# processing results
 results = {}
-for n in sample_sizes:
-    estimates_array = np.array(estimates[n])
+for n in n_list:
+    hat_theta2_arr = np.array(hat_theta2_dict[n])
     
-    # Разница между оценкой и истинным значением
-    differences = estimates_array - b**2
+    # difference between estimate and true value
+    bias = hat_theta2_arr - theta**2
     
-    # Выборочные характеристики
-    mean_difference = np.mean(differences)
-    std_difference = np.std(differences)
-    count_exceeds_threshold = np.sum(np.abs(differences) > threshold)
+    # sample characteristics
+    mean_bias = np.mean(bias)
+    var_bias = np.var(bias)
+    biased_count = np.sum(np.abs(bias) > delta) # Number of samples that exceed the threshold
     
     results[n] = {
-        'mean_difference': mean_difference,
-        'std_difference': std_difference,
-        'count_exceeds_threshold': count_exceeds_threshold,
-        'estimates': estimates_array
+        'mean_bias': mean_bias,
+        'var_bias': var_bias,
+        'biased_count': biased_count,
+        'hat_theta2_arr': hat_theta2_arr
     }
 
-# Вывод результатов
-for n in sample_sizes:
-    print(f"\nОбъем выборки n={n}:")
-    print(f"Средняя разница: {results[n]['mean_difference']:.4f}")
-    print(f"Стандартное отклонение разницы: {results[n]['std_difference']:.4f}")
-    print(f"Количество выборок, которые превышают порог: {results[n]['count_exceeds_threshold']}")
+# results output
+print(f"m={m}")
+for n in n_list:
+    print_separate()
+    print(f"n={n}")
+    print(f"mean_bias: {results[n]['mean_bias']:.4f}")
+    print(f"var_bias: {results[n]['var_bias']:.4f}")
+    print(f"biased_count: {results[n]['biased_count']}")
 
-# Визуализация
+# visualisation
 plt.figure(figsize=(10, 5))
 
-for n in sample_sizes:
-    plt.hist(results[n]['estimates'], bins=20, alpha=0.5, label=f'n={n}')
+for n in n_list:
+    plt.hist(results[n]['hat_theta2_arr'], 
+             bins=np.int64(np.floor(1 + 3.322 * np.log10(n))), # Sturges' rule
+             alpha=0.5, 
+             label=f'n={n}')
 
-plt.axvline(x=b**2, color='red', linestyle='--', label=r'Истинное значение $\theta^2$')
-plt.title(r'Распределение оценок $\theta^2$ для разных объемов выборки')
+plt.axvline(x=theta**2, color='red', linestyle='--', label=r'true value of $\theta^2$')
+plt.title(r'Distribution of $\theta^2$ estimates for different sample sizes')
 plt.xlabel(r'$\hat{\theta}^2$')
-plt.ylabel('Частота')
+plt.ylabel('count')
 plt.legend()
+plt.grid()
+plt.show()
+
+plt.figure(figsize=(10, 5))
+plt.boxplot([results[n]['hat_theta2_arr'] for n in n_list], labels=n_list)
+plt.title(r'Boxplot of $\theta^2$ estimates for different n')
+plt.ylabel(r'$\hat{\theta}^2$')
+plt.xlabel('sample size n')
 plt.grid()
 plt.show()

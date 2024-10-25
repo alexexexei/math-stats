@@ -75,6 +75,7 @@
         \vfill
         {\large\bf ЛАБОРАТОРНАЯ РАБОТА №1}\\
         {\large\bf ПРЕДМЕТ «МАТЕМАТИЧЕСКАЯ СТАТИСТИКА»}\\
+        {\large\bf ТЕМА «ХАРАКТЕРИСТИКИ РАСПРЕДЕЛЕНИЯ И ОЦЕНКА ПАРАМЕТРА»}\\
         Вариант 4, 2
         \vfill
 
@@ -238,7 +239,7 @@
     \texttt{battery\_{power}}, значение -- вероятность встретить именно такую \texttt{battery\_{power}}.
     После составляем кумулятивные суммы по этим вероятностям. Для гистограммы определяем
     количество интервалов правилом Стёрджеса: $n=1+\log_2{N}$ и округляем вниз
-    \begin{lstlisting}[label=graps, caption={Код для построения необходимых графиков}]
+    \begin{lstlisting}[label=graphs, caption={Код для построения необходимых графиков}]
     # plotting basic graphs
     def show_graphs(df: pd.Series, name='sample'):
         # the resulting axis will be labeled 0, 1, ..., n - 1
@@ -521,4 +522,164 @@
     $$\sqrt{n}\left(\hat{\theta}^2-\theta^2\right)\xrightarrow{d}\mathcal{N}\left(0,\text{Var}{\left[\hat{\theta}^2\right]}\right),$$
     $$\sqrt{n}\left(\dfrac{1}{2n}\sum\limits_{j=1}^{n}x_{j}^2-\theta^2\right)\xrightarrow{d}\mathcal{N}\left(0,\dfrac{5\theta^4}{n}\right),$$
     где $\dfrac{1}{2n}\sum\limits_{j=1}^{n}x_{j}^2$ -- среднее квадратичных отклонений. Следовательно, оценка является \textbf{асимптотически нормальной}.
+
+
+    Проведем эксперимент при указанных параметрах на языке программирования \texttt{Python}. Импортируем необходимые для эксперимента библиотеки (и оставляем метод для разделения вывода)
+    \begin{lstlisting}[label=import2, caption={Импортирование библиотек для эксперимента}]
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    # common separator between unrelated outputs
+    def print_separate():
+        print('----------------')
+    \end{lstlisting}
+
+
+    Зададим основные переменные: \texttt{n\_{list}} содержит различные объемы выборки, \texttt{m} -- кол-во выборок распределения Лапласа,
+    \texttt{theta} -- истинное значение масштабирующего параметра, \texttt{delta} -- порог для определения смещения, \texttt{hat\_theta2\_list}
+    -- словарь, в котором для каждого $n_i$ (ключа -- объема выборки) определен свой пустой список (значение -- оценка квадрата параметра). 
+    \begin{lstlisting}[label=main_variables, caption={Определение основных переменных в программе}]
+    n_list = [10, 100, 1000]  # list of sample sizes
+    m = 100  # number of samples for each n
+    theta = 0.5  # true value of the scaling parameter
+    delta = 0.1  # threshold for determining the difference
+    hat_theta2_dict = {n: [] for n in n_list} # dictionary (key-val) for
+                                              # storing estimates
+    \end{lstlisting}
+
+
+    Сгенерируем выборки в соответствии с заданием и посчитаем оценки
+    \begin{lstlisting}[label=gen_calc, caption={Код для генерации выборок и подсчета оценок выведенной формулой}]
+    # for each n generating m samples 
+    # and calculating estimates
+    for n in n_list:
+        for i in range(m):
+            # generating a sample from a Laplace
+            # distribution with zero bias
+            sample = np.random.laplace(loc=0, scale=theta, size=n)
+                
+            # calculating hat_theta^2 
+            # accroding to the derived formula
+            hat_theta2 = (1 / (2 * n)) * np.sum(sample ** 2)
+            hat_theta2_dict[n].append(hat_theta2)
+    \end{lstlisting}
+
+
+    Обработаем результаты в соответствии с заданием. Посчитаем матожидание и дисперсию для разницы
+    между оценкой и реальным параметром. Подсчитаем оценки, не попавшие в диапазон $\left(-\delta,\delta\right)$.
+    Запишем результаты в новый словарь, чтобы после удобно вывести их в консоль, а также построить графики
+    \begin{lstlisting}[label=proc_res, caption={Подсчет выборочных характеристик смещения и количество отличиий оценки от реального параметра на порог}]
+    # processing results
+    results = {}
+    for n in n_list:
+        hat_theta2_arr = np.array(hat_theta2_dict[n])
+            
+        # difference between estimate and true value
+        bias = hat_theta2_arr - theta**2
+            
+        # sample characteristics
+        mean_bias = np.mean(bias)
+        var_bias = np.var(bias)
+        biased_count = np.sum(np.abs(bias) > delta) # Number of samples that
+                                                    # exceed the threshold
+            
+        results[n] = {
+            'mean_bias': mean_bias,
+            'var_bias': var_bias,
+            'biased_count': biased_count,
+            'hat_theta2_arr': hat_theta2_arr
+        }
+    \end{lstlisting}
+
+
+    Выведем результаты в коноль следующим кодом
+    \begin{lstlisting}[label=res2, caption={Код для вывода в консоль результатов эксперимента}]
+    # results output
+    print(f"m={m}")
+    for n in n_list:
+        print_separate()
+        print(f"n={n}")
+        print(f"mean_bias: {results[n]['mean_bias']:.4f}")
+        print(f"var_bias: {results[n]['var_bias']:.4f}")
+        print(f"biased_count: {results[n]['biased_count']}")
+    \end{lstlisting}
+
+
+    Получим такие результаты. Видим, что при увеличении объема выборки дисперсия и количество отклоненных оценок уменьшаются
+    \begin{lstlisting}[label=res2out, caption={Вывод результатов эксперимента в консоль}]
+    m=100
+    ----------------  
+    n=10
+    mean_bias: -0.0073
+    var_bias: 0.0224  
+    biased_count: 50  
+    ----------------  
+    n=100
+    mean_bias: -0.0031
+    var_bias: 0.0024
+    biased_count: 5
+    ----------------
+    n=1000
+    mean_bias: -0.0003
+    var_bias: 0.0004
+    biased_count: 0
+    \end{lstlisting}
+
+
+    Вместе с этим для тех же данных выполнится код для построения гистограмм и ящиков с усами -- визуализируем результаты.
+    Шаги построения графиков аналогичны первому заданию
+    \begin{lstlisting}[label=graphs2, caption={Код для визуализации результатов}]
+    # visualisation
+    plt.figure(figsize=(10, 5))
+
+    # building hist
+    for n in n_list:
+        plt.hist(results[n]['hat_theta2_arr'], 
+                bins=np.int64(np.floor(1 + 3.322 * np.log10(n))), # Sturges'
+                                                                  # rule
+                alpha=0.5, 
+                label=f'n={n}')
+
+    plt.axvline(x=theta**2, color='red', linestyle='--',
+                label=r'true value of $\theta^2$')
+    plt.title(r'Distribution of $\theta^2$ estimates for different\
+              sample sizes')
+    plt.xlabel(r'$\hat{\theta}^2$')
+    plt.ylabel('count')
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+    # building boxplot
+    plt.figure(figsize=(10, 5))
+    plt.boxplot([results[n]['hat_theta2_arr'] for n in n_list],
+                labels=n_list)
+    plt.title(r'Boxplot of $\theta^2$ estimates for different n')
+    plt.ylabel(r'$\hat{\theta}^2$')
+    plt.xlabel('sample size n')
+    plt.grid()
+    plt.show()
+    \end{lstlisting}
+
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.55]{hist_10_100_1000.png}
+        \captionsetup{skip=0pt}
+        \caption{Гистограммы для различных объемов выборки}
+        \label{fig:hist}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.55]{boxplot_10_100_1000.png}
+        \captionsetup{skip=0pt}
+        \caption{Ящики с усами для различных объемов выборки}
+        \label{fig:boxplot}
+    \end{figure}
+    
+
+    Как видим, распределение стремится к нормальному с увеличенем объема выборки, разброс становится меньше, однако это не исключает
+    возможности появления выбросов, медиана почти не меняет своего значения при увеличении $n$ со 100 до 1000, сжатие ящиков говорит
+    о сходимости оценок к истинному значению параметра. В целом наши вычисления, рассуждения и выводы, проделанные в этом задании,
+    подтвердились.
 \end{document}
