@@ -399,7 +399,7 @@
     $$\mathbb{E}\left[g(x)\right]=\mathbb{E}\left[x\right]=\mu=0$$
     С первым моментом выражения с $\theta^2$ не получилось. Тогда, пусть $g(x)=x^2$ -- теперь
     найдем второй момент для распределения Лапласа. Пользуясь википедией, получим
-    $$\mathbb{E}\left[g(x)\right]=\mathbb{E}\left[x^2\right]=\int\limits_{-\infty}^{\infty}x^2f(x)\,dx=\mu^2+2\theta^2=/\mu=0/=2\theta^2$$
+    $$\mathbb{E}\left[g(x)\right]=\mathbb{E}\left[x^2\right]=\int\limits_{-\infty}^{\infty}x^2f_{\theta}(x)\,dx=\mu^2+2\theta^2=/\mu=0/=2\theta^2$$
     Мы получили теоретический момент порядка $k=2$ для распределения Лапласа.
     
     
@@ -471,7 +471,7 @@
         \mathbb{E}\left[x_n^4\right]=\alpha
     \end{bmatrix}=
     n\cdot\mathbb{E}\left[x^4\right],\text{ где }\mathbb{E}\left[x^4\right]\text{ -- четвертый момент},$$
-    $$\mathbb{E}\left[x^4\right]=\int\limits_{-\infty}^{\infty}x^4f(x)\,dx=\int\limits_{-\infty}^{\infty}x^4\cdot\dfrac{1}{2\theta}\exp{\left\{-\dfrac{|x|}{\theta}\right\}}\,dx=\dfrac{1}{2\theta}\int\limits_{-\infty}^{\infty}x^4\exp{\left\{-\dfrac{|x|}{\theta}\right\}}\,dx$$
+    $$\mathbb{E}\left[x^4\right]=\int\limits_{-\infty}^{\infty}x^4f_{\theta}(x)\,dx=\int\limits_{-\infty}^{\infty}x^4\cdot\dfrac{1}{2\theta}\exp{\left\{-\dfrac{|x|}{\theta}\right\}}\,dx=\dfrac{1}{2\theta}\int\limits_{-\infty}^{\infty}x^4\exp{\left\{-\dfrac{|x|}{\theta}\right\}}\,dx$$
     Так как в нашем распределении Лапласа сдвиг отсутствует ($\mu=0$), то это означает, что распределение симметрично относительно нуля. Тогда, вычислим интеграл только для
     положительных значений $x$ и умножим его на два. При условии $x\geq0$ получаем $|x|=x$
     $$\mathbb{E}\left[x^4\right]=\dfrac{1}{2\theta}\int\limits_{-\infty}^{\infty}x^4\exp{\left\{-\dfrac{|x|}{\theta}\right\}}\,dx=2\cdot\dfrac{1}{2\theta}\int\limits_{0}^{\infty}x^4\exp{\left\{-\dfrac{x}{\theta}\right\}}\,dx=
@@ -507,15 +507,46 @@
     из чего следует, что оценка является \textbf{состоятельной}, так как чем больше данных, тем более точной становится оценка.
 
 
-    Так как других оценок кроме полученной не имеется, не можем сравнить среднеквадратические ошибки оценок и на этой основе сделать вывод об эффективности -- \textbf{эффективность не гарантируется}.
+    Проверим эффективность оценки с помощью нижней оценки дисперсии. Для этого понадобится неравенство Крамера-Рао
+    $$\text{Var}{\left[\hat{\theta}^2\right]}\geq\dfrac{1}{I_n(\theta)}=\dfrac{1}{n\cdot I(\theta)},$$
+    где $I(\theta)$ -- информация Фишера
+    $$I(\theta)=\mathbb{E}\left[\dfrac{\partial\ln{L\left(\theta,x\right)}}{\partial\theta}\right]^2=-\mathbb{E}\left[\dfrac{\partial^2\ln{L\left(\theta,x\right)}}{\partial\theta^2}\right],$$
+    где $L\left(\theta,x\right)=L\left(\theta,\,x_1,\,x_2,\,\hdots,\,x_n\right)$ -- функция правдоподобия. В нашем случае $L$ будет иметь вид
+    $$L\left(\theta,x\right)=\prod_{i=1}^nf_{\theta}\left(x_i\right)=\left(\dfrac{1}{2\theta}\right)^n\exp{\left\{-\dfrac{1}{\theta}\sum{|x_i|}\right\}},$$
+    теперь найдем логарифм функции правдоподобия. Это нужно для упрощения дифференцирования
+    $$\ln{L\left(\theta,x\right)}=\ln{\dfrac{1}{\left(2\theta\right)^n}}\exp{\left\{-\dfrac{1}{\theta}\sum{|x_i|}\right\}}=\ln{\exp{\left\{-\dfrac{1}{\theta}\sum{|x_i|}\right\}}}-\ln{\left(2\theta\right)^n},$$
+    $$\ln{\exp{\left\{-\dfrac{1}{\theta}\sum{|x_i|}\right\}}}=-\dfrac{1}{\theta}\sum{|x_i|},\ \ \ln{\left(2\theta\right)^n}=n\ln{2\theta},$$
+    $$\ln{L\left(\theta,x\right)}=-\dfrac{1}{\theta}\sum{|x_i|}-n\ln{2\theta}$$
+    Теперь последовательно два раза возьмем производную от $\ln{L\left(\theta,x\right)}$ по $\theta$
+    $$\dfrac{\partial\ln{L\left(\theta,x\right)}}{\partial\theta}=\left(-\dfrac{1}{\theta}\sum{|x_i|}-n\ln{2\theta}\right)^{\prime}_{\theta}=
+    \left(-\dfrac{1}{\theta}\sum{|x_i|}\right)^{\prime}_{\theta}-\left(n\ln{2\theta}\right)^{\prime}_{\theta},$$
+    $$\left(-\dfrac{1}{\theta}\sum{|x_i|}\right)^{\prime}_{\theta}=\dfrac{1}{\theta^2}\sum{|x_i|}, \ \ \left(n\ln{2\theta}\right)^{\prime}_{\theta}=n\cdot\dfrac{2}{2\theta}=\dfrac{n}{\theta},$$
+    $$\dfrac{\partial\ln{L\left(\theta,x\right)}}{\partial\theta}=\dfrac{1}{\theta^2}\sum{|x_i|}-\dfrac{n}{\theta},$$
+    $$\dfrac{\partial^2\ln{L\left(\theta,x\right)}}{\partial\theta^2}=\left(\dfrac{1}{\theta^2}\sum{|x_i|}-\dfrac{n}{\theta}\right)^{\prime}_{\theta}=
+    \left(\dfrac{1}{\theta^2}\sum{|x_i|}\right)^{\prime}_{\theta}-\left(\dfrac{n}{\theta}\right)^{\prime}_{\theta},$$
+    $$\left(\dfrac{1}{\theta^2}\sum{|x_i|}\right)^{\prime}_{\theta}=-\dfrac{2}{\theta^3}\sum{|x_i|}, \ \ \left(\dfrac{n}{\theta}\right)^{\prime}_{\theta}=-\dfrac{n}{\theta^2}$$
+    $$\dfrac{\partial^2\ln{L\left(\theta,x\right)}}{\partial\theta^2}=-\dfrac{2}{\theta^3}\sum{|x_i|}+\dfrac{n}{\theta^2}$$
+    Теперь вычислим информацию Фишера $I\left(\theta\right)$
+    $$I\left(\theta\right)=-\mathbb{E}\left[-\dfrac{2}{\theta^3}\sum{|x_i|}+\dfrac{n}{\theta^2}\right]=\mathbb{E}\left[\dfrac{2}{\theta^3}\sum{|x_i|}\right]-\mathbb{E}\left[\dfrac{n}{\theta^2}\right],$$
+    $$\mathbb{E}\left[\dfrac{2}{\theta^3}\sum{|x_i|}\right]=\dfrac{2}{\theta^3}\mathbb{E}\left[\sum{|x_i|}\right]=\dfrac{2}{\theta^3}\sum{\mathbb{E}\left[|x_i|\right]}=\dfrac{2}{\theta^3}\cdot n\cdot\mathbb{E}\left[|x|\right],$$
+    $$\mathbb{E}\left[|x|\right]=\int\limits_{-\infty}^{\infty}|x|f_{\theta}(x)\,dx=/\mu=0,\text{ распр. симм. относ. 0},\,|x|=x/=2\int\limits_{0}^{\infty}xf_{\theta}(x)\,dx,$$
+    $$2\int\limits_{0}^{\infty}xf_{\theta}(x)\,dx=2\int\limits_{0}^{\infty}x\dfrac{1}{2\theta}\exp{\left\{\dfrac{-|x|}{\theta}\right\}}\,dx=\dfrac{1}{\theta}\int\limits_{0}^{\infty}x\exp{\left\{-\dfrac{x}{\theta}\right\}}\,dx,$$
+    $$\dfrac{1}{\theta}\int\limits_{0}^{\infty}x\exp{\left\{-\dfrac{x}{\theta}\right\}}\,dx=\begin{bmatrix}
+        u=\dfrac{x}{\theta}\\
+        du=\dfrac{dx}{\theta}
+    \end{bmatrix}=
+    \dfrac{1}{\theta}\int\limits_{0}^{\infty}u\theta e^{-u}\theta\,du=\theta\int\limits_{0}^{\infty}ue^{-u}\,du=\theta\cdot\Gamma(z),$$
+    $$\int\limits_{0}^{\infty}ue^{-u}\,du=\Gamma(z-1=1)=\Gamma(z=2)=1\Rightarrow\theta\cdot\Gamma(2)=\theta\Rightarrow\mathbb{E}\left[|x|\right]=\theta,$$
+    $$\mathbb{E}\left[\dfrac{2}{\theta^3}\sum{|x_i|}\right]=\dfrac{2}{\theta^3}\cdot n\cdot\theta=\dfrac{2n}{\theta^2},\ \ \mathbb{E}\left[\dfrac{n}{\theta^2}\right]=\dfrac{n}{\theta^2},$$
+    $$I\left(\theta\right)=\dfrac{2n}{\theta^2}-\dfrac{n}{\theta^2}=\dfrac{n}{\theta^2}\Rightarrow I_n\left(\theta\right)=n\cdot\dfrac{n}{\theta^2}=\dfrac{n^2}{\theta^2}\Rightarrow\dfrac{1}{I_n(\theta)}=\dfrac{\theta^2}{n^2}$$
+    Таким образом, получим
+    $$\text{Var}{\left[\hat{\theta}^2\right]}\geq \dfrac{\theta^2}{n^2}\Rightarrow\dfrac{5\theta^4}{n}\geq \dfrac{\theta^2}{n^2}\Rightarrow 5\theta^2\geq \dfrac{1}{n},$$
+    из чего следует, что $\forall n:5\theta^2>\frc{1}{n}$, что означает, что оценка является \textbf{неэффективной}.
 
 
     Проверим асимптотическую нормальность. Так как случайные величины
-    \begin{enumerate}
-        \item Независимы,
-        \item Одинаково распределены (все случ. вел. $x_i$ имеют одно и то же распределение с одинаковыми мат. ожиданиями и дисперсией),
-        \item Имеют конечные математическое ожидание и дисперсию,
-    \end{enumerate}
+    независимы, одинаково распределены (все случ. вел. $x_i$ имеют одно и то же распределение с одинаковыми мат. ожиданиями и дисперсией),
+    имеют конечные математическое ожидание и дисперсию,
     и, дисперсия среднего (то есть дисперсия квадрата оценки масштабирующего параметра $\theta$) с увеличенем объема выборки уменьшается,
     то, по центральной предельной теореме (ЦПТ) сумма (или среднее) этих случайных величин при $n\rightarrow\infty$ будет приближаться по распределению $d$ к нормальному распределению,
     то есть $$\sqrt{n}\left(\hat{\theta}-\theta\right)\xrightarrow{d}\mathcal{N}\left(0,\sigma^2\left[\theta\right]\right),$$ что в нашем случае будет иметь вид
@@ -536,7 +567,7 @@
 
 
     Зададим основные переменные: \texttt{n\_{list}} содержит различные объемы выборки, \texttt{m} -- кол-во выборок распределения Лапласа,
-    \texttt{theta} -- истинное значение масштабирующего параметра, \texttt{delta} -- порог для определения смещения, \texttt{hat\_theta2\_list}
+    \texttt{theta} -- истинное значение масштабирующего параметра, \texttt{delta} -- порог для определения смещения, \texttt{hat\_theta2\_dict}
     -- словарь, в котором для каждого $n_i$ (ключа -- объема выборки) определен свой пустой список (значение -- оценка квадрата параметра). 
     \begin{lstlisting}[label=main_variables, caption={Определение основных переменных в программе}]
     n_list = [10, 100, 1000]  # list of sample sizes
@@ -554,12 +585,10 @@
     # and calculating estimates
     for n in n_list:
         for i in range(m):
-            # generating a sample from a Laplace
-            # distribution with zero bias
+            # generating a sample (Laplace, bias=0)
             sample = np.random.laplace(loc=0, scale=theta, size=n)
                 
-            # calculating hat_theta^2 
-            # accroding to the derived formula
+            # calc hat_theta^2 accroding to the derived formula
             hat_theta2 = (1 / (2 * n)) * np.sum(sample ** 2)
             hat_theta2_dict[n].append(hat_theta2)
     \end{lstlisting}
