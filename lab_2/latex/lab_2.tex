@@ -1,0 +1,139 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage{cmap}
+\usepackage[english, russian]{babel}
+\usepackage{indentfirst}
+\usepackage[left=20mm, top=20mm, right=20mm, bottom=20mm]{geometry}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{graphicx}
+\usepackage{fancybox, fancyhdr}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Лабораторная работа №2}
+\fancyhead[R]{Математическая статистика}
+\fancyfoot[C]{\thepage}
+\graphicspath{{images/}}
+\usetikzlibrary{patterns}
+\definecolor{LightGray}{gray}{0.95}
+\definecolor{LightGray2}{gray}{0.7}
+\lstdefinestyle{code}{
+    language=Python, % replace with needed language
+    basicstyle=\footnotesize\ttfamily,
+    backgroundcolor=\color{LightGray},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=false,
+    frame=single,
+    rulecolor=\color{LightGray2},
+    linewidth=\linewidth,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!40!black},
+    stringstyle=\color{purple},
+    escapeinside={\%*}{*)},
+    inputencoding=utf8x,
+    xleftmargin=0pt,
+    framexleftmargin=0pt,
+    framexrightmargin=0pt
+}
+\lstset{style=code}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    pdftitle={contents setup},
+    pdfpagemode=FullScreen,
+}
+\setlength{\parskip}{1.5mm}
+\setlength{\headheight}{15pt}
+\setlength{\footskip}{15pt}
+\allowdisplaybreaks
+\DeclareMathOperator{\sinc}{sinc}
+\newcommand{\frc}[2]{\raisebox{2pt}{$#1$}\big/\raisebox{-3pt}{$#2$}}
+
+\begin{document}
+    \begin{titlepage}
+
+        \begin{center}
+        \includegraphics[width=0.3\textwidth]{itmo.png} % requires itmo.png in /images folder
+        \vfill
+        
+        Федеральное государственное автономное образовательное учреждение высшего образования
+        «Национальный Исследовательский Университет ИТМО»\\
+        
+        \vfill
+        {\large\bf ЛАБОРАТОРНАЯ РАБОТА №2}\\
+        {\large\bf ПРЕДМЕТ «МАТЕМАТИЧЕСКАЯ СТАТИСТИКА»}\\
+        {\large\bf ТЕМА «ДОВЕРИТЕЛЬНЫЕ ИНТЕРВАЛЫ»}\\
+        Вариант 1, 1
+        \vfill
+
+        \begin{flushright}
+            \begin{minipage}{.45\textwidth}
+            {
+                \hbox{Преподаватель: Лимар И. А.}
+                \hbox{Студент: Румянцев А. А.}
+                \hbox{Поток: Мат Стат 31.2}
+                \hbox{}
+                \hbox{Факультет: СУиР}
+                \hbox{Группа: R3341}
+            }
+            \end{minipage}
+        \end{flushright}
+        
+        \vfill
+                
+        Санкт-Петербург\\
+        2024
+        \end{center}
+    \end{titlepage}
+    
+    \tableofcontents
+
+    \newpage
+    \section{Задание 1}
+    \subsection{Условие}
+    Предъявите доверительный интервал уровня $1-\alpha$ для указанного параметра при данных
+    предположениях (с математическими обоснованиями). Сгенерируйте 2 выборки объёма объёма
+    25 и посчитайте доверительный интервал. Повторить 1000 раз. Посчитайте, сколько раз 
+    95-процентный доверительный интервал покрывает реальное значение параметра. То же самое
+    сделайте для объема выборки 10000. Как изменился результат? Как объяснить? Что изменяется
+    при росте объемов выборок?
+
+
+    Даны две независимые выборки $X_1$, $X_2$ из нормальных распределений $\mathcal{N}\left(\mu_1,\sigma_1^2\right)$,\\
+    $\mathcal{N}(\mu_2,\sigma_2^2)$ объемов $n_1$, $n_2$ соответственно.
+    Сначала указывается оцениваемая функция, потом данные об остальных параметрах, затем параметры эксперимента и подсказки.
+    $$\tau=\mu_1-\mu_2;\,\sigma_1^2,\,\sigma_2^2\text{ известны};\,\mu_1=2,\,\mu_2=1,\,\sigma_1^2=1,\,\sigma_2^2=0.5;\text{ воспользуйтесь функцией}$$
+    $$\dfrac{\overline{X_1}-\overline{X_2}-\tau}{\sigma},\,\,\,\,\sigma^2=\dfrac{\sigma_1^2}{n_1}+\dfrac{\sigma_2^2}{n_2}$$
+
+
+    \subsection{Выполнение}
+    тут будет выполнение
+
+
+    \section{Задание 2}
+    \subsection{Условие}
+    Постройте асимптотический доверительный интервал уровня $1-\alpha$ для указанного параметра.
+    Проведите эксперимент по схеме, аналогичной первой задаче.
+    
+    
+    Сначала указывается класс распределений (однопараметрический),
+    затем параметры эксперимента и подсказки.
+    $$\text{Ехр}(\lambda);\text{ медиана};\,\lambda=1$$
+
+
+    \subsection{Выполнение}
+    тут будет выполнение
+\end{document}
