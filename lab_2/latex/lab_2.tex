@@ -167,7 +167,7 @@
     Подставим преобразованную дисперсию в данное в задаче выражение
     $$\dfrac{\overline{X_1}-\overline{X_2}-\tau}{\dfrac{\sqrt{n_2\cdot\sigma_1^2+n_1\cdot\sigma_2^2}}{\sqrt{n_1\cdot n_2}}}=\sqrt{n_1\cdot n_2}\cdot\dfrac{\overline{X_1}-\overline{X_2}-\tau}{\sqrt{n_2\cdot\sigma_1^2+n_1\cdot\sigma_2^2}}$$
     Мы получили выражение, похожее на искомое. Теперь определеим доверительный интервал для $\tau$. Выражения под корнями будут всегда положительны, так как в любой выборке должен быть хотя бы один элемент,
-    дисперсия в четной степени и сумма положительных значений не может быть отрицательной. Следовательно, вынесем их из под модуля
+    дисперсия в четной степени, и, сумма положительных значений не может быть отрицательной. Следовательно, вынесем их из под модуля
     $$\Bigg|\sqrt{n_1\cdot n_2}\cdot\dfrac{\overline{X_1}-\overline{X_2}-\tau}{\sqrt{n_2\cdot\sigma_1^2+n_1\cdot\sigma_2^2}}\Bigg|\leq x_{1-\frac{\alpha}{2}}\Rightarrow
     \Bigg|\overline{X_1}-\overline{X_2}-\tau\Bigg|\leq x_{1-\frac{\alpha}{2}}\cdot\dfrac{\sqrt{n_2\cdot\sigma_1^2+n_1\cdot\sigma_2^2}}{\sqrt{n_1\cdot n_2}}$$
     Раскроем модуль и преобразуем неравенство так, чтобы в его рамках осталась только $\tau$
@@ -192,7 +192,7 @@
     alpha = 0.05
     it = 1000
     \end{lstlisting}
-    Реализуем основной алгоритм -- в цикле итерируемся $it$ раз и считаем $n$ доверительных интервалов по выведенной формуле.
+    Реализуем основной алгоритм -- в цикле итерируемся $it$ раз и считаем $it$ доверительных интервалов для объемов $n_1,n_2$ по выведенной формуле.
     Проверим, попадает ли реальное значение параметра в доверительный интервал. Если True, то увеличим счетчик на 1. В конце
     выведем количество попавших в интервал $\tau$ и отношение относительно общего количества итераций
     \begin{lstlisting}[label=code1, caption={Код для подсчета доверительных интервалов и кол-ва попаданий}]
@@ -260,65 +260,88 @@
         \lambda\cdot\exp{\left\{-\lambda x\right\}},& x\geq0\\
         0,& x < 0
     \end{cases}$$
-    Предположим, что некоторое распределение зависит от единственного параметра, для которого построен доверительный интервал.
+    Пусть есть некоторое распределение с неизвестным параметром $\theta$.
     Известно, что при увеличении объема выборки оценка этого параметра асимптотически нормальна
     $$\hat{\theta}_n\xrightarrow{n\to\infty}\mathcal{N}\left(\theta;\dfrac{\sigma^2\left(\theta\right)}{n}\right),$$
     тогда, чтобы построить доверительный интервал, нужно воспользоваться одним из двух подходов:
     \begin{enumerate}
         \item Нормировать величину $\theta$
-        \item Найти функцию преобразования
+        \item Найти функцию преобразования $g(u)$
     \end{enumerate}
-    В нашем случае я буду использовать первый подход. Так как мы снова работаем с нормальным распределением, то рассуждения относительно
+    В нашем случае я буду использовать первый подход. Так как мы снова работаем с нормальным распределением (оценка, не $f_X(x)$), то рассуждения относительно
     построения доверительного интервала для параметра $\theta$ аналогичны. Обозначим $u_{1-\frac{\alpha}{2}}$ квантиль порядка $1-\frac{\alpha}{2}$
     $$\Bigg|\sqrt{n}\cdot\dfrac{\hat{\theta}_n-\theta}{\sigma\left(\theta\right)}\Bigg|\sim\mathcal{N}\left(0,1\right),\,\,\,\, \Bigg|\sqrt{n}\cdot\dfrac{\hat{\theta}_n-\theta}{\sigma\left(\theta\right)}\Bigg|\leq u_{1-\frac{\alpha}{2}}$$
+    Раскроем модуль и выразим параметр $\theta$ аналогично первому заданию
     $$\hat{\theta}_n-\dfrac{\sigma\left(\theta\right)}{\sqrt{n}}u_{1-\frac{\alpha}{2}}\leq\theta\leq\hat{\theta}_n+\dfrac{\sigma\left(\theta\right)}{\sqrt{n}}u_{1-\frac{\alpha}{2}}$$
-    $$\hat{\theta}_n-SE\left[\hat{\theta}_n\right]u_{1-\frac{\alpha}{2}}\leq\theta\leq\hat{\theta}_n+SE\left[\hat{\theta}_n\right]u_{1-\frac{\alpha}{2}}$$
-    $$SE\left[\hat{\theta}_n\right]=\sqrt{\text{Var}\left[\hat{\theta}_n\right]}$$
+    Проведем небольшую замену для удобства
+    $$\hat{\theta}_n-SE\left[\hat{\theta}_n\right]u_{1-\frac{\alpha}{2}}\leq\theta\leq\hat{\theta}_n+SE\left[\hat{\theta}_n\right]u_{1-\frac{\alpha}{2}},$$
+    $$SE\left[\hat{\theta}_n\right]=\sqrt{\text{Var}\left[\hat{\theta}_n\right]},\text{ где SE -- Standard Error}$$
+    В нашем случае оцениваем медиану. Заменим $\hat{\theta}_n$ на $\hat{m}$ и получим неравенство, к которому нужно будет привести наши данные, чтобы получить
+    доверительный интервал для медианы
     $$\hat{m}-SE\left[\hat{m}\right]u_{1-\frac{\alpha}{2}}\leq m\leq\hat{m}+SE\left[\hat{m}\right]u_{1-\frac{\alpha}{2}}$$
-    $$L\left(\lambda,x\right)=\prod_{i=1}^{n}f_X\left(x\right)=\lambda^n\cdot\exp{\left\{-\lambda\sum\limits_{i=1}^{n}x_i\right\}}$$
+    Так как напрямую найти оценку медианы мы не можем, то найдем оценку параметра $\lambda$, после чего найдем связь между $m$ и $\lambda$.
+    Оценивать параметр $\lambda$ будем методом правдоподобия. Составим функцию правдоподобия -- произведение $f_X(x_i)$
+    $$L\left(\lambda,x\right)=\prod_{i=1}^{n}f_X\left(x_i\right)=\lambda^n\cdot\exp{\left\{-\lambda\sum\limits_{i=1}^{n}x_i\right\}}$$
+    Максимизируем функцию правдоподобия, чтобы найти $\hat{\lambda}$. Для этого возьмем частную производную по $\lambda$ от логарифма функции правдоподобия и приравняем к нулю
+    $$\hat{\lambda}=\text{argmax}\left(L\left(\lambda,x\right)\right)\Rightarrow \dfrac{\partial\ln{L\left(\lambda,x\right)}}{\partial\lambda}=0$$
+    Логарифмируем функцию правдоподобия
     $$\ln{L\left(\lambda,x\right)}=\ln{\left(\lambda^n\cdot\exp{\left\{-\lambda\sum\limits_{i=1}^{n}x_i\right\}}\right)}=
     \ln{\lambda^n}+\ln{\exp{\left\{-\lambda\sum\limits_{i=1}^{n}x_i\right\}}},$$
     $$\ln{\lambda^n}=n\cdot\ln{\lambda},\,\,\,\,\ln{\exp{\left\{-\lambda\sum\limits_{i=1}^{n}x_i\right\}}}=-\lambda\sum\limits_{i=1}^{n}x_i\cdot\ln{e}=-\lambda\sum\limits_{i=1}^{n}x_i,$$
     $$\ln{L\left(\lambda,x\right)}=n\ln{\lambda}-\lambda\sum\limits_{i=1}^{n}x_i$$
-    $$\hat{\lambda}=\text{argmax}\left(L\left(\lambda,x\right)\right)\Rightarrow \dfrac{\partial\ln{L\left(\lambda,x\right)}}{\partial\lambda}=0,$$
+    Теперь возьмем производную и найдем оценку параметра $\lambda$
     $$\dfrac{\partial\ln{L\left(\lambda,x\right)}}{\partial\lambda}=\left(n\ln{\lambda}-\lambda\sum\limits_{i=1}^{n}x_i\right)_{\lambda}^{\prime}=
     \dfrac{n}{\lambda}-\sum\limits_{i=1}^{n}x_i=0\Rightarrow\dfrac{n}{\lambda}=\sum\limits_{i=1}^{n}x_i\Rightarrow\hat{\lambda}=\dfrac{n}{\sum_{i=1}^{n}x_i},$$
     $$\overline{X}=\dfrac{1}{n}\sum\limits_{i=1}^{n}x_i\Rightarrow\sum\limits_{i=1}^{n}x_i=n\cdot\overline{X}\Rightarrow\hat{\lambda}=\dfrac{n}{n\cdot\overline{X}}=\dfrac{1}{\overline{X}}$$
+    Таким образом, мы нашли оценку параметра $\lambda$
     $$\hat{\lambda}=\dfrac{1}{\overline{X}}$$
+    Выведем связь $m$ и $\lambda$ через функцию распределения, которая имеет вид
     $$F_X(x)=\begin{cases}
         1-\exp{\left\{-\lambda x\right\}},& x\geq0\\
         0,& x<0
     \end{cases}$$
+    Функция распределения находится на промежутке от 0 до 1, следовательно медиана для некоторого $x=m$ находится в значении функции распределения, равного 0.5
     $$F_X(x)\in\left[0;1\right]\Rightarrow\text{Med}\left[x\right]=0.5$$
+    Здесь мы и найдем связь $m$ и $\lambda$ и выразим $\hat{m}$ через $\hat{\lambda}$ (такое возможно при наличии функциональной связи между параметрами)
     $$F_X(x=m)=1-\exp{\left\{-\lambda m\right\}}=0.5\Rightarrow\exp{\left\{-\lambda m\right\}}=0.5\Rightarrow\ln{e^{-\lambda m}}=\ln{0.5},$$
     $$\ln{e^{-\lambda m}}=-\lambda m\cdot\ln{e}=-\lambda m,\,\,\,\,\ln{0.5}=\ln{2^{-1}}=-\ln{2},$$
     $$-\lambda m=-\ln{2}\Rightarrow\lambda m=\ln{2}\Rightarrow m=\dfrac{\ln{2}}{\lambda}\Rightarrow\hat{m}=\dfrac{\ln{2}}{\hat{\lambda}}=\ln{2}\cdot\overline{X}$$
+    Таким образом, оценка медианы имеет вид
     $$\hat{m}=\overline{X}\ln{2}$$
+    При этом, согласно ЦПТ (выборка из независимых одинаково распределенных $x_i$, матожидание и дисперсия конечны по wiki. константа не повлияет на распределение),
+    $$\hat{m}=\overline{X}\ln{2}\sim\mathcal{N}\left(\dfrac{\ln{2}}{\lambda},\dfrac{\left(\ln{2}\right)^2}{n\lambda^2}\right),$$
+    а значит оценка медианы имеет асимптотически нормальное распределение при больших $n$.
+    Осталось вычислить дисперсию, по которой найдем Standard Error. Используем свойства дисперсии
     $$\text{Var}\left[\hat{m}\right]=\text{Var}\left[\,\overline{X}\ln{2}\right]=\text{Var}\left[\dfrac{\ln{2}}{n}\sum_{i=1}^{n}x_i\right]=\left(\dfrac{\ln{2}}{n}\right)^2\text{Var}\left[\sum_{i=1}^{n}x_i\right],$$
     $$\text{Var}\left[\sum_{i=1}^{n}x_i\right]=\text{/случ. вел. независимы/}=\sum_{i=1}^{n}\text{Var}\left[x_i\right]=n\cdot\text{Var}\left[x\right],$$
     $$\text{Var}\left[x\right]=\text{/wiki/}=\dfrac{1}{\lambda^2}\Rightarrow n\cdot\text{Var}\left[x\right]=\dfrac{n}{\lambda^2},$$
     $$\left(\dfrac{\ln{2}}{n}\right)^2\text{Var}\left[\sum_{i=1}^{n}x_i\right]=\left(\dfrac{\ln{2}}{n}\right)^2\cdot\dfrac{n}{\lambda^2}=\dfrac{\left(\ln{2}\right)^2}{\lambda^2 n}$$
+    Таким образом, дисперсия оценки медианы имеет вид
     $$\text{Var}\left[\hat{m}\right]=\dfrac{\left(\ln{2}\right)^2}{\lambda^2 n}$$
+    Вычислим стандартную ошибку
     $$SE\left[\hat{m}\right]=\sqrt{\text{Var}\left[\hat{m}\right]}=\sqrt{\dfrac{\left(\ln{2}\right)^2}{\lambda^2 n}}=\dfrac{\ln{2}}{\lambda\sqrt{n}}$$
+    Подставим найденные оценку медианы и стандартную ошибку оценки медианы в искомый доверительный интервал, который мы выразили в начале задания.
+    Таким образом, доверительный интервал для медианы будет иметь вид
     $$\overline{X}\ln{2}-\dfrac{\ln{2}}{\lambda\sqrt{n}}u_{1-\frac{\alpha}{2}}\leq m\leq\overline{X}\ln{2}+\dfrac{\ln{2}}{\lambda\sqrt{n}}u_{1-\frac{\alpha}{2}}$$
 
 
-    \begin{lstlisting}[label=imps2, caption={import}]
+    Проведем эксперименты. Импортируем необходимые библиотеки
+    \begin{lstlisting}[label=imps2, caption={Импорт необходимых библиотек}]
     import numpy as np
     import scipy.stats as st
     \end{lstlisting}
-
-
-    \begin{lstlisting}[label=vars2, caption={pars}]
+    Запишем в переменные известные данные. Медиану мы выразили при поиске ее оценки. Зададим уровень
+    значимости $\alpha=0.05$
+    \begin{lstlisting}[label=vars2, caption={Запись известных параметров в переменные}]
     _lambda = 1
     med = np.log(2) / _lambda
     n = 25
     alpha = 0.05
     it = 1000
     \end{lstlisting}
-
-
-    \begin{lstlisting}[label=code2, caption={code2}]
+    Реализуем основной алгоритм. Написан аналогично первому заданию, однако теперь выборка одна, она
+    имеет экспоненциальное распределение, и, доверительный интервал высчитывается по другой формуле
+    \begin{lstlisting}[label=code2, caption={Реализация алгоритма для задания 2}]
     count = 0
     for i in range(it):
         X = np.random.exponential(scale = 1 / _lambda, size=n)
@@ -342,24 +365,21 @@
     \end{lstlisting}
 
 
-    $it=1$
-    \begin{lstlisting}[label=int2, caption={$n=25$}]
+    Выведем доверительный интервал для $n=25,\,it=1$
+    \begin{lstlisting}[label=int2, caption={Доверительный интервал для $n=25$}]
     0.2781<=0.6931<=0.8216
     \end{lstlisting}
-
-
-    $it=1000$
-    \begin{lstlisting}[label=n25_2, caption={$n=25$}]
+    Посчитаем количество медиан, попавших в наш доверительный интервал при $n=25,\,it=1000$
+    \begin{lstlisting}[label=n25_2, caption={Количество медиан внутри интервала и отношение при $n=25$}]
     covers_med_count=950, ratio=0.95
     \end{lstlisting}
-
-
-    \begin{lstlisting}[label=n10000_2, caption={$n=10000$}]
+    Проведем аналогичные действия для $n=10000$
+    \begin{lstlisting}[label=n10000_2, caption={Количество медиан внутри интервала и отношение при $n=10000$}]
     covers_med_count=948, ratio=0.948
     \end{lstlisting}
 
 
-    Тут будут выводы (аналогичные)
+    Можем наблюдать, что результаты аналогичны первому заданию, наши выводы подтвердились и тут.
 
 
     \section{Приложения}
