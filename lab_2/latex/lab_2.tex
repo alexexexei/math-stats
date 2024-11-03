@@ -190,14 +190,14 @@
     sigma2_1, sigma2_2 = 1, 0.5
     n_1, n_2 = 25, 25
     alpha = 0.05
-    n = 1
+    it = 1000
     \end{lstlisting}
-    Реализуем основной алгоритм -- в цикле итерируемся $n$ раз и считаем $n$ доверительных интервалов по выведенной формуле.
+    Реализуем основной алгоритм -- в цикле итерируемся $it$ раз и считаем $n$ доверительных интервалов по выведенной формуле.
     Проверим, попадает ли реальное значение параметра в доверительный интервал. Если True, то увеличим счетчик на 1. В конце
     выведем количество попавших в интервал $\tau$ и отношение относительно общего количества итераций
     \begin{lstlisting}[label=code1, caption={Код для подсчета доверительных интервалов и кол-ва попаданий}]
     count = 0
-    for i in range(n):
+    for i in range(it):
         X_1 = np.random.normal(mu_1, sigma2_1, n_1)
         X_2 = np.random.normal(mu_2, sigma2_2, n_2)
         
@@ -216,22 +216,22 @@
         if lower_bound <= tau <= upper_bound:
             count += 1
         
-    print(f'covers_tau_count={count}, ratio={count / n}')
+    print(f'covers_tau_count={count}, ratio={count / it}')
     \end{lstlisting}
 
 
-    Выведем доверительный интервал для $n=1$
+    Выведем доверительный интервал для $n=25,\,it=1$
     \begin{lstlisting}[label=res1, caption={Посчитанный доверительный интервал}]
     0.5934<=1<=1.5536
     \end{lstlisting}
     Выведем количество попавших в интервал $\tau$ и отношение относительно общего количества итераций
-    для $n=1000$
-    \begin{lstlisting}[label=res1000cov, caption={95-\% доверительный интервал для $n=1000$}]
-    covers_tau_count=975, ratio=0.975
+    для $n=25,\,it=1000$. Сами доверительные интервалы можно посмотреть в приложении 1
+    \begin{lstlisting}[label=n25, caption={95-\% доверительный интервал для $n=25$}]
+    covers_tau_count=970, ratio=0.97
     \end{lstlisting}
     Сделаем то же самое для $n=10000$
-    \begin{lstlisting}[label=res10000cov, caption={95-\% доверительный интервал для $n=10000$}]
-    covers_tau_count=9688, ratio=0.9688
+    \begin{lstlisting}[label=n10000, caption={95-\% доверительный интервал для $n=10000$}]
+    covers_tau_count=960, ratio=0.96
     \end{lstlisting}
 
 
@@ -254,14 +254,22 @@
 
 
     \subsection{Выполнение}
+    Экспоненциальное распределение задается следующим образом
     $$f_X(x)=
     \begin{cases}
         \lambda\cdot\exp{\left\{-\lambda x\right\}},& x\geq0\\
         0,& x < 0
     \end{cases}$$
-
-
-    $$\hat{\theta}_n\xrightarrow{n\to\infty}\mathcal{N}\left(\theta;\dfrac{\sigma^2\left(\theta\right)}{\sqrt{n}}\right)$$
+    Предположим, что некоторое распределение зависит от единственного параметра, для которого построен доверительный интервал.
+    Известно, что при увеличении объема выборки оценка этого параметра асимптотически нормальна
+    $$\hat{\theta}_n\xrightarrow{n\to\infty}\mathcal{N}\left(\theta;\dfrac{\sigma^2\left(\theta\right)}{n}\right),$$
+    тогда, чтобы построить доверительный интервал, нужно воспользоваться одним из двух подходов:
+    \begin{enumerate}
+        \item Нормировать величину $\theta$
+        \item Найти функцию преобразования
+    \end{enumerate}
+    В нашем случае я буду использовать первый подход. Так как мы снова работаем с нормальным распределением, то рассуждения относительно
+    построения доверительного интервала для параметра $\theta$ аналогичны. Обозначим $u_{1-\frac{\alpha}{2}}$ квантиль порядка $1-\frac{\alpha}{2}$
     $$\Bigg|\sqrt{n}\cdot\dfrac{\hat{\theta}_n-\theta}{\sigma\left(\theta\right)}\Bigg|\sim\mathcal{N}\left(0,1\right),\,\,\,\, \Bigg|\sqrt{n}\cdot\dfrac{\hat{\theta}_n-\theta}{\sigma\left(\theta\right)}\Bigg|\leq u_{1-\frac{\alpha}{2}}$$
     $$\hat{\theta}_n-\dfrac{\sigma\left(\theta\right)}{\sqrt{n}}u_{1-\frac{\alpha}{2}}\leq\theta\leq\hat{\theta}_n+\dfrac{\sigma\left(\theta\right)}{\sqrt{n}}u_{1-\frac{\alpha}{2}}$$
     $$\hat{\theta}_n-SE\left[\hat{\theta}_n\right]u_{1-\frac{\alpha}{2}}\leq\theta\leq\hat{\theta}_n+SE\left[\hat{\theta}_n\right]u_{1-\frac{\alpha}{2}}$$
@@ -281,7 +289,7 @@
         1-\exp{\left\{-\lambda x\right\}},& x\geq0\\
         0,& x<0
     \end{cases}$$
-    $$F_X(x)\in\left[0;1\right]\Rightarrow\text{Med}\left(x\right)=0.5$$
+    $$F_X(x)\in\left[0;1\right]\Rightarrow\text{Med}\left[x\right]=0.5$$
     $$F_X(x=m)=1-\exp{\left\{-\lambda m\right\}}=0.5\Rightarrow\exp{\left\{-\lambda m\right\}}=0.5\Rightarrow\ln{e^{-\lambda m}}=\ln{0.5},$$
     $$\ln{e^{-\lambda m}}=-\lambda m\cdot\ln{e}=-\lambda m,\,\,\,\,\ln{0.5}=\ln{2^{-1}}=-\ln{2},$$
     $$-\lambda m=-\ln{2}\Rightarrow\lambda m=\ln{2}\Rightarrow m=\dfrac{\ln{2}}{\lambda}\Rightarrow\hat{m}=\dfrac{\ln{2}}{\hat{\lambda}}=\ln{2}\cdot\overline{X}$$
@@ -334,18 +342,20 @@
     \end{lstlisting}
 
 
-    \begin{lstlisting}[label=int2, caption={int2}]
+    $it=1$
+    \begin{lstlisting}[label=int2, caption={$n=25$}]
     0.2781<=0.6931<=0.8216
     \end{lstlisting}
 
 
-    \begin{lstlisting}[label=covers2_1000, caption={covers}]
+    $it=1000$
+    \begin{lstlisting}[label=n25_2, caption={$n=25$}]
     covers_med_count=950, ratio=0.95
     \end{lstlisting}
 
 
-    \begin{lstlisting}
-    covers_med_count=9557, ratio=0.9557
+    \begin{lstlisting}[label=n10000_2, caption={$n=10000$}]
+    covers_med_count=948, ratio=0.948
     \end{lstlisting}
 
 

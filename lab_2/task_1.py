@@ -7,10 +7,10 @@ tau = mu_1 - mu_2
 sigma2_1, sigma2_2 = 1, 0.5
 n_1, n_2 = 25, 25
 alpha = 0.05
-n = 10000
+it = 1000
 
 count = 0
-for i in range(n):
+for i in range(it):
     X_1 = np.random.normal(mu_1, sigma2_1, n_1)
     X_2 = np.random.normal(mu_2, sigma2_2, n_2)
 
@@ -29,4 +29,4 @@ for i in range(n):
     if lower_bound <= tau <= upper_bound:
         count += 1
 
-print(f'covers_tau_count={count}, ratio={count / n}')
+print(f'covers_tau_count={count}, ratio={count / it}')
