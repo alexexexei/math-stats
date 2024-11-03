@@ -7,5 +7,6 @@
 **/latex/*.fdb_latexmk
 **/latex/*.synctex.gz
 **/latex/*.synctex(busy)
+**/latex/*.atfi
 .idea
 .DS_Store
