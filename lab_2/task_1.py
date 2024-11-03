@@ -23,6 +23,7 @@ for i in range(n):
 
     lower_bound = (X_1_mean - X_2_mean) - z * sigma
     upper_bound = (X_1_mean - X_2_mean) + z * sigma
+    
     print(f'{lower_bound:.4f}<={tau}<={upper_bound:.4f}')
     
     if lower_bound <= tau <= upper_bound:
