@@ -123,12 +123,12 @@
     \subsection{Выполнение}
     Пусть $X_1,\hdots,X_n\sim\mathcal{N}\left(\mu,\sigma^2\right)$ -- независимая выборка из нормального распределения,
     $\overline{X}$ -- выборочное среднее. Тогда, по теореме Фишера, среднее выборочное также имеет нормальное распределение
-    $$Z=\sqrt{n}\cdot\dfrac{\overline{X}-\mu}{\sigma}\sim\mathcal{N}\left(0,1\right).$$
+    $$Z=\sqrt{n}\cdot\dfrac{\overline{X}-\mu}{\sigma}\sim\mathcal{N}\left(0,1\right)$$
     По условию задания имеем неизвестный параметр $\mu$ -- математическое ожидание (генеральное среднее) случайной величины $X$. В качестве точечной
     оценки параметра $\mu$ возьмем выборочное среднее $\hat{\mu}=\overline{X}$. Для уточнения приближенного равенства
     $\mu\approx \overline{X}$ построим доверительный интервал, накрывающий параметр $\mu$ с заданной доверительной
     вероятностью $$\gamma=1-\alpha,$$ при этом статистика $$\overline{X}=\dfrac{1}{n}\sum\limits_{i=1}^{n}x_i$$
-    имеет нормальное распределение с параметрами $$\overline{X}\sim\mathcal{N}\left(\mu,\dfrac{\sigma^2}{n}\right).$$
+    имеет нормальное распределение с параметрами $$\overline{X}\sim\mathcal{N}\left(\mu,\dfrac{\sigma^2}{n}\right)$$
     Обозначим границы интервалов через квантили порядков $\frac{\alpha}{2}$ и $1-\frac{\alpha}{2}$ соответственно
     $$r_1=x_{\frac{\alpha}{2}},\,\,r_2=x_{1-\frac{\alpha}{2}},$$ где $r_1$ -- нижняя граница доверительного интервала, $r_2$ -- верхняя.
     Тогда, доверительная вероятность $\gamma$ удовлетворяет соотношению
@@ -142,7 +142,7 @@
         \label{fig:normal}
     \end{figure}
     \noindent Пользуясь свойством симметричности нормального распределения
-    $$r_1=-r_2=-x_{1-\frac{\alpha}{2}}.$$
+    $$r_1=-r_2=-x_{1-\frac{\alpha}{2}}$$
     Таким образом, исходя из приведенного ранее соотношения и симметричности границ интервала, необходимо выразить интервал для $\mu$ из выражения 
     $$\Bigg|\sqrt{n}\cdot\dfrac{\overline{X}-\mu}{\sigma}\Bigg|\leq x_{1-\frac{\alpha}{2}}$$
 
@@ -150,23 +150,21 @@
     В нашем случае имеем две выборки из нормальных распределений. Исходя из предыдущих рассуждений, обе эти выборки
     также будут иметь нормальные распределения с параметрами
     $$\overline{X_1}\sim\mathcal{N}\left(\mu_1,\dfrac{\sigma_1^2}{n_1}\right),\,\,\,\,\overline{X_2}\sim\mathcal{N}\left(\mu_2,\dfrac{\sigma_2^2}{n_2}\right)$$
-
-
     Так как выборочное среднее и математическое ожидание обладают свойством линейности, то разность выборок с нормальными распределениями
     даст выборку с нормальным распределением с параметрами
     $$\overline{X_1}-\overline{X_2}\sim\mathcal{N}\left(\mu_1-\mu_2,\dfrac{\sigma_1^2}{n_1}+\dfrac{\sigma_2^2}{n_2}\right),$$
-    что с учетом наших замен можно записать как $$\overline{X_1}-\overline{X_2}\sim\mathcal{N}\left(\tau,\sigma^2\right).$$
+    что с учетом наших замен можно записать как $$\overline{X_1}-\overline{X_2}\sim\mathcal{N}\left(\tau,\sigma^2\right)$$
     Преобразуем к такому виду, чтобы справа осталось стандартное нормальное распределение $\mathcal{N}\left(0,1\right).$
     Вычтем из левой и правой части $\tau$
     $$\overline{X_1}-\overline{X_2}-\tau\sim\mathcal{N}\left(0,\sigma^2\right),$$
     теперь поделим правую часть на $\sigma^2$, а левую на $\sqrt{\sigma^2}$
-    $$\dfrac{\overline{X_1}-\overline{X_2}-\tau}{\sigma}\sim\mathcal{N}\left(0,1\right).$$
+    $$\dfrac{\overline{X_1}-\overline{X_2}-\tau}{\sigma}\sim\mathcal{N}\left(0,1\right)$$
     Таким образом слева получили данное в условии задания выражение, которое имеет стандартное нормальное распределение.
     Преобразуем дисперсию генеральной совокупности так, чтобы при подстановке в выражение выше получить искомое выражение
-    $$\sigma=\sqrt{\dfrac{\sigma_1^2}{n_1}+\dfrac{\sigma_2^2}{n_2}}=\sqrt{\dfrac{n_2\cdot\sigma_1^2+n_1\cdot\sigma_2^2}{n_1\cdot n_2}}=\dfrac{\sqrt{n_2\cdot\sigma_1^2+n_1\cdot\sigma_2^2}}{\sqrt{n_1\cdot n_2}}.$$
+    $$\sigma=\sqrt{\dfrac{\sigma_1^2}{n_1}+\dfrac{\sigma_2^2}{n_2}}=\sqrt{\dfrac{n_2\cdot\sigma_1^2+n_1\cdot\sigma_2^2}{n_1\cdot n_2}}=\dfrac{\sqrt{n_2\cdot\sigma_1^2+n_1\cdot\sigma_2^2}}{\sqrt{n_1\cdot n_2}}$$
     Подставим преобразованную дисперсию в данное в задаче выражение
     $$\dfrac{\overline{X_1}-\overline{X_2}-\tau}{\dfrac{\sqrt{n_2\cdot\sigma_1^2+n_1\cdot\sigma_2^2}}{\sqrt{n_1\cdot n_2}}}=\sqrt{n_1\cdot n_2}\cdot\dfrac{\overline{X_1}-\overline{X_2}-\tau}{\sqrt{n_2\cdot\sigma_1^2+n_1\cdot\sigma_2^2}}$$
-    Мы получили выражение, похожее на искомое. Теперь определеим доверительный интервал для $\tau$. Выражения под корнями будут всегда положительны, так как в любой выборке должен быть хотя бы один элемент,
+    Мы получили выражение, похожее на искомое. Теперь определим доверительный интервал для $\tau$. Выражения под корнями будут всегда положительны, так как в любой выборке должен быть хотя бы один элемент,
     дисперсия в четной степени, и, сумма положительных значений не может быть отрицательной. Следовательно, вынесем их из под модуля
     $$\Bigg|\sqrt{n_1\cdot n_2}\cdot\dfrac{\overline{X_1}-\overline{X_2}-\tau}{\sqrt{n_2\cdot\sigma_1^2+n_1\cdot\sigma_2^2}}\Bigg|\leq x_{1-\frac{\alpha}{2}}\Rightarrow
     \Bigg|\overline{X_1}-\overline{X_2}-\tau\Bigg|\leq x_{1-\frac{\alpha}{2}}\cdot\dfrac{\sqrt{n_2\cdot\sigma_1^2+n_1\cdot\sigma_2^2}}{\sqrt{n_1\cdot n_2}}$$
@@ -218,8 +216,6 @@
         
     print(f'covers_tau_count={count}, ratio={count / it}')
     \end{lstlisting}
-
-
     Выведем доверительный интервал для $n=25,\,it=1$
     \begin{lstlisting}[label=res1, caption={Посчитанный доверительный интервал}]
     0.5934<=1<=1.5536
@@ -363,8 +359,6 @@
 
     print(f'covers_med_count={count}, ratio={count / it}')
     \end{lstlisting}
-
-
     Выведем доверительный интервал для $n=25,\,it=1$
     \begin{lstlisting}[label=int2, caption={Доверительный интервал для $n=25$}]
     0.2781<=0.6931<=0.8216
