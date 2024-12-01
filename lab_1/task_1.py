@@ -43,7 +43,7 @@ def show_graphs(df: pd.Series, name='sample'):
     plt.show()
 
     # Sturges' rule
-    n = np.int64(np.floor(1+3.322*np.log10(df.shape[0])))
+    n = np.int64(1 + np.floor(3.322 * np.log10(df.shape[0])))
     plt.hist(df, bins=n)
     plt.title(f'Histogram of {name}')
     plt.xlabel('battery_power')

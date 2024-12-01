@@ -57,7 +57,7 @@ plt.figure(figsize=(10, 5))
 
 for n in n_list:
     plt.hist(results[n]['hat_theta2_arr'], 
-             bins=np.int64(np.floor(1 + 3.322 * np.log10(n))), # Sturges' rule
+             bins=np.int64(1 + np.floor(3.322 * np.log10(n))), # Sturges' rule
              alpha=0.5, 
              label=f'n={n}')
 

@@ -238,7 +238,7 @@
     по сортированным данным без сохранения индексов связку ключ-значение, где ключ --
     \texttt{battery\_{power}}, значение -- вероятность встретить именно такую \texttt{battery\_{power}}.
     После составляем кумулятивные суммы по этим вероятностям. Для гистограммы определяем
-    количество интервалов правилом Стёрджеса: $n=1+\log_2{N}$ и округляем вниз
+    количество интервалов правилом Стёрджеса: $n=1+\left[\log_2{N}\right]$
     \begin{lstlisting}[label=graphs, caption={Код для построения необходимых графиков}]
     # plotting basic graphs
     def show_graphs(df: pd.Series, name='sample'):
@@ -259,7 +259,7 @@
         plt.show()
 
         # Sturges' rule
-        n = np.int64(np.floor(1+3.322*np.log10(df.shape[0])))
+        n = np.int64(1 + np.floor(3.322 * np.log10(df.shape[0])))
         plt.hist(df, bins=n)
         plt.title(f'Histogram of {name}')
         plt.xlabel('battery_power')
@@ -664,7 +664,7 @@
     # building hist
     for n in n_list:
         plt.hist(results[n]['hat_theta2_arr'], 
-                bins=np.int64(np.floor(1 + 3.322 * np.log10(n))), # Sturges'
+                bins=np.int64(1 + np.floor(3.322 * np.log10(n))), # Sturges'
                                                                   # rule
                 alpha=0.5, 
                 label=f'n={n}')
